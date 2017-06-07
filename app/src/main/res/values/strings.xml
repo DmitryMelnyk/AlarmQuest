@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Alarm Quest</string>
+    <string name="error_question">Вы уже отвечали на этот вопрос. Выберите другой!</string>
+    <string name="success_message">Поздравляю! Вы справились с заданием!</string>
+</resources>
