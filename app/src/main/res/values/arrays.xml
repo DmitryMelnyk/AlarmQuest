@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="countries">
-        <item>Argentina Argentina Argentina Argentina Argentina</item>
-        <item>BoliviaBol iviaBoliviaBol iviaBo liviaBoliviaBolivia</item>
-        <item>BrazilBrazil BrazilBrazil BrazilBra zilBrazilBrazil</item>
-        <item>ChileChil eChileChi leChileChil eChi leChileChi leChile</item>
-        <item>Costa RicaCost a Ric aCosta RicaCosta RicaCosta Rica</item>
-        <item>Dominican Republic</item>
-        <item>Mexico</item>
-        <item>Nicaragua</item>
-        <item>Peru</item>
-        <item>Venezuela</item>
-        <item>Cuba</item>
-        <item>Ecuador</item>
-        <item>El Salvador</item>
-        <item>Haiti</item>
-        <item>Panama</item>
-        <item>Paraguay</item>
-    </string-array>
-
     <integer-array name="colors">
         <item>@color/roseStart</item>
         <item>@color/roseEnd</item>
@@ -30,5 +11,23 @@
         <item>@color/purpleStart</item>
         <item>@color/purpleEnd</item>
     </integer-array>
+
+    <string-array name="nav_titles">
+        <item>Будильник</item>
+        <item>Инструкция</item>
+        <item>Информация</item>
+        <item>Настройки</item>
+        <item />
+        <item>Выйти</item>
+    </string-array>
+
+    <array name="nav_titles_icon">
+        <item>@drawable/nav_alarm</item>
+        <item>@drawable/nav_instruction</item>
+        <item>@drawable/nav_about</item>
+        <item>@drawable/nav_settings</item>
+        <item>0</item>
+        <item>@drawable/nav_exit</item>
+    </array>
 
 </resources>

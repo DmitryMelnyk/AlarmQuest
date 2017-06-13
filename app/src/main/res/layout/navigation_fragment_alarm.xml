@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_marginLeft="26dp"
+    android:layout_marginRight="26dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/nav_f_a_current_time"
+            android:text="17:40"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="26sp"
+            fontPath="fonts/digital.ttf"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingPrefix" />
+
+        <!--<TextView-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:textSize="26sp"-->
+            <!--android:textColor="@color/textColorPrimary"-->
+            <!--android:layout_toRightOf="@+id/nav_f_current_time"-->
+            <!--android:text="@string/navigation_fragment_hours"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <Switch
+            android:id="@+id/nav_f_a_switcher"
+            android:layout_alignParentRight="true"
+            android:textSize="26sp"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/nav_f_a_alarm_time"
+        android:textSize="108sp"
+        android:gravity="center"
+        android:textColor="@color/textSelected"
+        android:text="10:00"
+        fontPath="fonts/digital.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:id="@+id/nav_f_a_date"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/textColorSecondary"
+        android:text="Wednesday, 16 December 2017"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

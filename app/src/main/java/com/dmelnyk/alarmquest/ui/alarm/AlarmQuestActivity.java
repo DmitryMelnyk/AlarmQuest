@@ -1,20 +1,27 @@
 package com.dmelnyk.alarmquest.ui.alarm;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.StringDef;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.application.AlarmQuestApplication;
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
-import com.dmelnyk.alarmquest.data.DataUtil;
-import com.dmelnyk.alarmquest.data.question.QuestionBlock;
 import com.dmelnyk.alarmquest.ui.alarm.di.AlarmQuestModule;
 import com.dmelnyk.alarmquest.ui.alarm.questfragment.QuestFragment;
+import com.dmelnyk.alarmquest.utils.MyBounceInterpolator;
 import com.igalata.bubblepicker.BubblePickerListener;
 import com.igalata.bubblepicker.adapter.BubblePickerAdapter;
 import com.igalata.bubblepicker.model.BubbleGradient;
@@ -23,15 +30,20 @@ import com.igalata.bubblepicker.rendering.BubblePicker;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
 import javax.inject.Inject;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AlarmQuestActivity extends AppCompatActivity
     implements Contract.IAlarmQuestView, QuestFragment.SolvedQuestCallbackListener {
 
+    public static final String EXTRA_QUESTION_COUNT = "Questions_toSolve_count";
+
     BubblePicker picker;
     QuestFragment questFragment;
+    TextView leftToSolveQuestion;
+
+    Animation scaleAnimation;
 
     @Inject
     Contract.IAlarmQuestPresenter presenter;
@@ -41,17 +53,15 @@ public class AlarmQuestActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_quest);
 
+        // Default number of questions to solve is 2
+        int questionToSolveCount = getIntent().getIntExtra(EXTRA_QUESTION_COUNT, 2);
+
         // initialize dagger2
         AlarmQuestApplication.get(this).getAppComponent()
                 .add(new AlarmQuestModule()).inject(this);
 
         initializeViews();
-        presenter.bindView(this);
-    }
-
-    @Override
-    public void setBubbleTitles(String[] titles) {
-        setAdapter(titles);
+        presenter.bindView(this, questionToSolveCount);
     }
 
     private void setAdapter(String[] titles) {
@@ -93,11 +103,26 @@ public class AlarmQuestActivity extends AppCompatActivity
     private void initializeViews() {
         picker = (BubblePicker) findViewById(R.id.picker);
         picker.setBubbleSize(100);
-        picker.setCenterImmediately(true);
+//        picker.setCenterImmediately(true);
 
         questFragment = (QuestFragment) getSupportFragmentManager().findFragmentById(R.id.questFragment);
+
+        leftToSolveQuestion = (TextView) findViewById(R.id.left_to_solve_questions);
+
+        // initialize animations;
+        scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(1.0, 20);
+        scaleAnimation.setInterpolator(interpolator);
+        leftToSolveQuestion.setAnimation(scaleAnimation);
     }
 
+    public void showAlertDialog() {
+        SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(getString(R.string.alarm_clock_off))
+                .setContentText(getString(R.string.success_message));
+        dialog.setOnDismissListener(view -> AlarmQuestActivity.this.finish());
+        dialog.show();
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -112,7 +137,14 @@ public class AlarmQuestActivity extends AppCompatActivity
 
     @Override
     public void updateLeftToAnswerQuestionsCounter(String n) {
-        // TODO
+        leftToSolveQuestion.setText(n);
+        leftToSolveQuestion.startAnimation(scaleAnimation);
+    }
+
+    @Override
+    public void setBubbleTitles(String[] titles) {
+        setAdapter(titles);
+        picker.invalidate();
     }
 
     @Override
@@ -122,7 +154,7 @@ public class AlarmQuestActivity extends AppCompatActivity
 
     @Override
     public void success() {
-        Toast.makeText(this, getString(R.string.success_message), Toast.LENGTH_SHORT).show();
+        showAlertDialog();
     }
 
     @Override

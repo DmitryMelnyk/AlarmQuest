@@ -15,28 +15,34 @@ public class AlarmQuestPresenter implements Contract.IAlarmQuestPresenter {
 
     private final IQuestInteractor questInteractor;
     private Contract.IAlarmQuestView view;
-    private final int questionsCount = 20; // default question's count
+    private final int questionsCount = 15; // default question's count
     private int questionsToSolveCounters = 1;
     private QuestionData[] quesions;
 
     // Database of questions already answered
     private ArrayList<String> answeredQuestions = new ArrayList<>();
     private String askedQuestionTitle = "";
+    private String[] titles;
 
     public AlarmQuestPresenter(IQuestInteractor questInteractor) {
         this.questInteractor = questInteractor;
     }
 
     @Override
-    public void bindView(Contract.IAlarmQuestView view) {
+    public void bindView(Contract.IAlarmQuestView view, int questionToSolveCount) {
         this.view = view;
         if (view != null) {
-            quesions = questInteractor.getQuestions(questionsCount);
-            String[] titles = getTitles(quesions);
-            askedQuestionTitle = quesions[0].getQuestion();
-            view.setBubbleTitles(titles);
-            view.setQuestion(quesions[0]);
+            loadQuestions(view);
+            questionsToSolveCounters = questionToSolveCount;
         }
+    }
+
+    private void loadQuestions(Contract.IAlarmQuestView view) {
+        quesions = questInteractor.getQuestions(questionsCount);
+        titles = getTitles(quesions);
+        askedQuestionTitle = quesions[0].getQuestion();
+        view.setBubbleTitles(titles);
+        view.setQuestion(quesions[0]);
     }
 
     private String[] getTitles(QuestionData[] questions) {
@@ -46,6 +52,11 @@ public class AlarmQuestPresenter implements Contract.IAlarmQuestPresenter {
         }
 
         return titles;
+    }
+
+    @Override
+    public void refreshQuestions() {
+        loadQuestions(view);
     }
 
     @Override
@@ -85,6 +96,11 @@ public class AlarmQuestPresenter implements Contract.IAlarmQuestPresenter {
 
         if (questionsToSolveCounters == 0) {
             view.success();
+        }
+
+        // After answering to all questions - stop alarm
+        if (answeredQuestions.size() == questionsCount) {
+            // TODO: stop alarm
         }
 
     }

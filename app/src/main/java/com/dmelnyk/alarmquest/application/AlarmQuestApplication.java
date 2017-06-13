@@ -4,9 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.dmelnyk.alarmquest.R;
 import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by dmitry on 23.05.17.
@@ -49,5 +51,11 @@ public class AlarmQuestApplication extends Application {
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/fonts.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 }

@@ -6,19 +6,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.application.AlarmQuestApplication;
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
-import com.dmelnyk.alarmquest.ui.alarm.questfragment.di.DaggerQuestComponent;
-import com.dmelnyk.alarmquest.ui.alarm.questfragment.di.QuestModule;
 
+import com.dmelnyk.alarmquest.ui.alarm.questfragment.di.DaggerQuestComponent;
+import com.dmelnyk.alarmquest.utils.*;
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -54,6 +54,7 @@ public class QuestFragment extends Fragment implements Contract.IQuestView {
 
     @OnClick({R.id.answer1, R.id.answer2, R.id.answer3, R.id.answer4})
     public void onViewClicked(View view) {
+
         switch (view.getId()) {
             case R.id.answer1:
                 questPresenter.onButtonClick(1);
@@ -68,6 +69,7 @@ public class QuestFragment extends Fragment implements Contract.IQuestView {
                 questPresenter.onButtonClick(4);
                 break;
         }
+
     }
 
     public void setQuestion(QuestionData question) {
@@ -148,22 +150,30 @@ public class QuestFragment extends Fragment implements Contract.IQuestView {
 
     @Override
     public void showCorrectAnswer(int num) {
+        final Animation scaleAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.scale_anim);
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+        scaleAnimation.setInterpolator(interpolator);
+
         switch (num) {
             case 1:
                 answer1.setBackgroundResource(R.drawable.button_correct);
                 answer1.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                answer1.startAnimation(scaleAnimation);
                 break;
             case 2:
                 answer2.setBackgroundResource(R.drawable.button_correct);
                 answer2.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                answer2.startAnimation(scaleAnimation);
                 break;
             case 3:
                 answer3.setBackgroundResource(R.drawable.button_correct);
                 answer3.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                answer3.startAnimation(scaleAnimation);
                 break;
             case 4:
                 answer4.setBackgroundResource(R.drawable.button_correct);
                 answer4.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+                answer4.startAnimation(scaleAnimation);
                 break;
         }
     }

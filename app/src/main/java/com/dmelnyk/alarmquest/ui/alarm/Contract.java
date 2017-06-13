@@ -21,9 +21,11 @@ public class Contract {
     }
 
     public interface IAlarmQuestPresenter {
-        void bindView(IAlarmQuestView view);
+        void bindView(IAlarmQuestView view, int questionToSolveCount);
         void unbindView();
         void pickQuestion(String questionTitle);
         void isAnswerCorrect(boolean isCorrect);
+
+        void refreshQuestions();
     }
 }
