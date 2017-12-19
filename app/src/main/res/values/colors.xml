@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#673ab7</color>
+    <color name="colorPrimary">@color/darkBlue</color>
+    <color name="colorPrimaryDark">@color/darkBlue</color>
+    <color name="colorAccent">@color/roseStart</color>
+    <color name="colorAccent2">@color/lightBlue</color>
 
-    <color name="blueStart">#4EFFF3</color>
-    <color name="blueEnd">#0ca6f9</color>
-    <color name="purpleStart">#a369ff</color>
-    <color name="purpleEnd">#0e56ff</color>
     <color name="roseStart">#FF6A00</color>
-    <color name="roseEnd">#ef0276</color>
-    <color name="greenStart">#a7f56e</color>
     <color name="greenEnd">#11c612</color>
+
+    <color name="lightBlue">#424558</color>
+    <color name="darkBlue">#303247</color>
+    <color name="black">#1e1e28</color>
+    <color name="white">#ffffff</color>
 
 
     <color name="textColorPrimary">#212121</color>
@@ -20,4 +20,6 @@
     <color name="textSelected">#673ab7</color>
 
     <color name="textColor">#424242</color>
+    <color name="transparent">#80ffffff</color>
+    <color name="darkBlack">#000000</color>
 </resources>

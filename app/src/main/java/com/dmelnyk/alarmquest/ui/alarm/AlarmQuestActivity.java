@@ -1,15 +1,9 @@
 package com.dmelnyk.alarmquest.ui.alarm;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.StringDef;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,6 +16,7 @@ import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
 import com.dmelnyk.alarmquest.ui.alarm.di.AlarmQuestModule;
 import com.dmelnyk.alarmquest.ui.alarm.questfragment.QuestFragment;
 import com.dmelnyk.alarmquest.utils.MyBounceInterpolator;
+import com.dmelnyk.alarmquest.utils.AudioService;
 import com.igalata.bubblepicker.BubblePickerListener;
 import com.igalata.bubblepicker.adapter.BubblePickerAdapter;
 import com.igalata.bubblepicker.model.BubbleGradient;
@@ -45,6 +40,8 @@ public class AlarmQuestActivity extends AppCompatActivity
 
     Animation scaleAnimation;
 
+    private PickerItem mSelectedItem;
+
     @Inject
     Contract.IAlarmQuestPresenter presenter;
 
@@ -65,7 +62,6 @@ public class AlarmQuestActivity extends AppCompatActivity
     }
 
     private void setAdapter(String[] titles) {
-        final TypedArray colors = getResources().obtainTypedArray(R.array.colors);
 
         BubblePickerAdapter adapter = new BubblePickerAdapter() {
             @Override
@@ -78,10 +74,12 @@ public class AlarmQuestActivity extends AppCompatActivity
             public PickerItem getItem(int position) {
                 PickerItem item = new PickerItem();
                 item.setTitle(titles[position]);
-                item.setGradient(new BubbleGradient(colors.getColor((position * 2) % 8, 0),
-                        colors.getColor((position * 2)% 8 + 1, 0), BubbleGradient.VERTICAL));
-                // typeFase
-                item.setTextColor(ContextCompat.getColor(AlarmQuestActivity.this, android.R.color.white));
+                item.setGradient(new BubbleGradient(
+                        ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
+                        ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark),
+                        BubbleGradient.VERTICAL));
+
+                item.setTextColor(ContextCompat.getColor(AlarmQuestActivity.this, R.color.white));
                 return item;
             }
         };
@@ -90,6 +88,11 @@ public class AlarmQuestActivity extends AppCompatActivity
         BubblePickerListener listener = new BubblePickerListener() {
             @Override
             public void onBubbleSelected(@NotNull PickerItem pickerItem) {
+                // deselect previousSelectedItem
+                if (mSelectedItem != null) {
+                    mSelectedItem.setSelected(false);
+                }
+                mSelectedItem = pickerItem;
                 String title = pickerItem.getTitle();
                 presenter.pickQuestion(title);
             }
@@ -127,6 +130,10 @@ public class AlarmQuestActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         picker.onResume();
+        //TODO
+//        Intent startIntent = new Intent(this, AudioService.class);
+//        startIntent.setAction(AudioService.DECREASE_VOLUME);
+//        startService(startIntent);
     }
 
     @Override
@@ -155,6 +162,9 @@ public class AlarmQuestActivity extends AppCompatActivity
     @Override
     public void success() {
         showAlertDialog();
+        Intent startIntent = new Intent(getApplicationContext(), AudioService.class);
+        startIntent.setAction(AudioService.STOP);
+        startService(startIntent);
     }
 
     @Override

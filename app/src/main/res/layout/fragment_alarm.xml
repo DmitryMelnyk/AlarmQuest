@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_alarm"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    >
 
+    <TextView
+        android:id="@+id/tv_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dimen36dp"
+        android:gravity="center"
+        android:text="@string/alarm_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimen20sp"
+        />
+
+    <ImageView
+        android:id="@+id/ib_add"
+        android:layout_width="@dimen/dimen_36dp"
+        android:layout_height="@dimen/dimen_36dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen16dp"
+        android:layout_marginTop="@dimen/dimen36dp"
+        android:src="@drawable/ic_add_black_24dp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_alarm_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_alarm"
+        android:layout_marginTop="@dimen/dimen_56dp"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen16dp"
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="@color/white"
+        app:fabSize="normal"
+        />
 </RelativeLayout>

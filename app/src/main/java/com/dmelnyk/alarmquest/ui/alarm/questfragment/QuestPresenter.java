@@ -33,7 +33,6 @@ public class QuestPresenter implements Contract.IQuestPresenter {
         view.enableAllButtons(false);
         if (isCorrectAnswer) {
             view.showCorrectAnswer(answerNum);
-            // TODO: refresh answer & correctAnswerCount
         } else {
             view.showWrongAnswer(answerNum);
             view.showCorrectAnswer(questionData.getCorrectAnswer());

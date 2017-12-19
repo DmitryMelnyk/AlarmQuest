@@ -1,6 +1,7 @@
 package com.dmelnyk.alarmquest.ui.navigation.fragments.alarmclock;
 
 import com.dmelnyk.alarmquest.business.navigation.fragments.alarmclock.IAlarmFragmentInteractor;
+import com.dmelnyk.alarmquest.utils.AlarmClockUtil;
 
 /**
  * Created by d264 on 6/11/17.
@@ -10,9 +11,11 @@ public class AlarmFragmentPresenter implements Contract.IAlarmFragmentPresenter 
 
     private Contract.IAlarmFragmentView view;
     private IAlarmFragmentInteractor interactor;
+    private AlarmClockUtil alarmClockUtil;
 
-    public AlarmFragmentPresenter(IAlarmFragmentInteractor interactor) {
+    public AlarmFragmentPresenter(IAlarmFragmentInteractor interactor, AlarmClockUtil alarmClockUtil) {
         this.interactor = interactor;
+        this.alarmClockUtil = alarmClockUtil;
     }
 
     @Override
@@ -41,17 +44,20 @@ public class AlarmFragmentPresenter implements Contract.IAlarmFragmentPresenter 
     @Override
     public void setAlarm(String time) {
         interactor.saveAlarm(time);
+        alarmClockUtil.startAlarmClock(time);
     }
 
     @Override
     public void changeSwitcherState(boolean checked) {
         interactor.saveAlarmEnableState(checked);
         if (checked) {
-            // TODO: start AlarmManager
             view.enableAlarmTimer(checked, interactor.getSavedAlarm());
+            // TODO: start AlarmManager
+            alarmClockUtil.startAlarmClock(interactor.getSavedAlarm());
         } else {
-            // TODO: disable AlarmManager
             view.enableAlarmTimer(checked, "-");
+            // TODO: disable AlarmManager
+            alarmClockUtil.stopAlarmClock();
         }
     }
 }

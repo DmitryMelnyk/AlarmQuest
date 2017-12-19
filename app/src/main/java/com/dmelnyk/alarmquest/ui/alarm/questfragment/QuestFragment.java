@@ -129,10 +129,10 @@ public class QuestFragment extends Fragment implements Contract.IQuestView {
             answer3.setBackgroundResource(R.drawable.button);
             answer4.setBackgroundResource(R.drawable.button);
 
-            answer1.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-            answer2.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-            answer3.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-            answer4.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+//            answer1.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+//            answer2.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+//            answer3.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+//            answer4.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
         }
     }
 

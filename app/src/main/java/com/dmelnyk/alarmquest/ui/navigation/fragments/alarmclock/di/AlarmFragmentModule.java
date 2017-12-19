@@ -6,8 +6,10 @@ import com.dmelnyk.alarmquest.business.navigation.fragments.alarmclock.AlarmFrag
 import com.dmelnyk.alarmquest.business.navigation.fragments.alarmclock.IAlarmFragmentInteractor;
 import com.dmelnyk.alarmquest.data.navigation.fragments.alarmclock.ITimeRepository;
 import com.dmelnyk.alarmquest.data.navigation.fragments.alarmclock.TimeRepository;
+import com.dmelnyk.alarmquest.ui.alarm.di.AlarmQuestScope;
 import com.dmelnyk.alarmquest.ui.navigation.fragments.alarmclock.AlarmFragmentPresenter;
 import com.dmelnyk.alarmquest.ui.navigation.fragments.alarmclock.Contract;
+import com.dmelnyk.alarmquest.utils.AlarmClockUtil;
 
 import dagger.Module;
 import dagger.Provides;
@@ -33,7 +35,14 @@ public class AlarmFragmentModule {
 
     @Provides
     @AlarmFragmentScope
-    Contract.IAlarmFragmentPresenter providesIAlarmQuestPresenter(IAlarmFragmentInteractor interactor) {
-        return new AlarmFragmentPresenter(interactor);
+    AlarmClockUtil providesAlarmClockUtil(Context context) {
+        return new AlarmClockUtil(context);
+    }
+
+    @Provides
+    @AlarmFragmentScope
+    Contract.IAlarmFragmentPresenter providesIAlarmQuestPresenter(IAlarmFragmentInteractor interactor,
+                                                                  AlarmClockUtil alarmClockUtil) {
+        return new AlarmFragmentPresenter(interactor, alarmClockUtil);
     }
 }

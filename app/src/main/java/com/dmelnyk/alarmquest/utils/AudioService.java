@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -23,10 +24,11 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-public class MyService extends Service {
+public class AudioService extends Service {
     static final int NOTIFICATION_ID = 543;
     public static final String PLAY = "play";
     public static final String STOP = "stop";
+    public static final String DECREASE_VOLUME = "decrease volume";
 
     public static boolean isServiceRunning = false;
     private SimpleExoPlayer player;
@@ -41,8 +43,13 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null && intent.getAction().equals(PLAY)) {
             startServiceWithNotification();
+        } else if (intent != null
+                && intent.getAction().equals(DECREASE_VOLUME)
+                && player != null) {
+            player.setVolume(0.3f);
+        } else {
+            stopMyService();
         }
-        else stopMyService();
         return START_STICKY;
     }
 
@@ -101,6 +108,7 @@ public class MyService extends Service {
                 this, userAgent), new DefaultExtractorsFactory(), null, null);
 
         LoopingMediaSource loopingMediaSource = new LoopingMediaSource(mediaSource, 100);
+        player.setAudioStreamType(AudioManager.STREAM_ALARM);
         player.prepare(loopingMediaSource);
         player.setVolume(0.5f);
         player.setPlayWhenReady(true);
