@@ -7,71 +7,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="53576d61d2859b50e31493879253faa066ddbf83">
+        sha1="75a3fce7e86bf9152bb844c9f1ccafdc70f0a5d3">
         <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_7a81081ac84e390b078f698195f0b82450025ca5/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/home/d264/.android/build-cache/ec40e2033871643b4978128eb13586326baf7681/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="ebcb0bcf52fab7c586f39717f7cb8de91748b1b1">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/pre-dexed/debug/classes_67909db50af9c3a9c1eae0c25b23053bf404c74d.jar" />
-    </item>
-    <item
         is-multidex="true"
-        jar="/home/d264/.android/build-cache/12a555a1bc8557d204e8f0bff865370846a1e24b/output/jars/classes.jar"
+        jar="/home/d264/.android/build-cache/acccd49f4e18f7e398b9b521d0b69cc4cde84ee2/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="5ddf5f4817565c9db82613c16093f76640a54e15">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_32a39bf4e4b557d1afd111fb9fb788d343917cf1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/d264/.android/build-cache/12a555a1bc8557d204e8f0bff865370846a1e24b/output/jars/libs/internal_impl-23.1.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="f4d7a07120e76988f3a15403838d323c2400db83">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.1.1_c59748440c2835a5a8008273248611a90036e5fd/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/d264/.android/build-cache/7c728df97c36361535354a03cb2f10fac39eaf4e/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="47a72d25966129c3260bf7d4b05fd8795032b749">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/pre-dexed/debug/classes_6352cc4fd467af1af7c201ec88f24a07f3198844.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/d264/.android/build-cache/e295de0443405216bba01d7096dacd41e433a3ed/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="afa103bc11e04627e7f5150b6c1fe852d496687e">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/pre-dexed/debug/classes_2fc6acfbe69783eb053c068251459b77c06db42e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/d264/.android/build-cache/12a555a1bc8557d204e8f0bff865370846a1e24b/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="5ddf5f4817565c9db82613c16093f76640a54e15">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/pre-dexed/debug/classes_32a39bf4e4b557d1afd111fb9fb788d343917cf1.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/d264/.android/build-cache/8a554f47a85bb75768ea479251744f24cb206860/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d03cbe00a6703cfa62ae868707af59d41aff2140">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/pre-dexed/debug/classes_ac475804ffef84f4feff97956994d6313c05cb73.jar" />
+        sha1="62e9322b0ed4fadcbd50c95741f1cd50ce5c7e12">
+        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c1c27d1b8098f7ac160e8700649630aae89660a4/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -81,42 +27,6 @@
         revision="25.0.3"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_a75f816bcfd8fa97b006ab812a9d73711ea81440/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/d264/.android/build-cache/12a555a1bc8557d204e8f0bff865370846a1e24b/output/jars/libs/internal_impl-23.1.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="f4d7a07120e76988f3a15403838d323c2400db83">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_c59748440c2835a5a8008273248611a90036e5fd.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/d264/.android/build-cache/7c728df97c36361535354a03cb2f10fac39eaf4e/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="47a72d25966129c3260bf7d4b05fd8795032b749">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6352cc4fd467af1af7c201ec88f24a07f3198844/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/d264/.android/build-cache/29d90332326085dd0e46f7232e3b6bbe46a33023/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="0c3529d9491be892952749d252ae1defa9b1f937">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/pre-dexed/debug/classes_68d8162cab39e1710f8a7d331c0f9617e1b25707.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/d264/.android/build-cache/2067dfa6178e09b44de55e53bbfcc9ec3cd2ef97/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="57487745ce450899f9f250d5ae5c092a682cd041">
-        <dex dex="/home/d264/Coding/Android/AlarmQuest/app/build/intermediates/pre-dexed/debug/classes_2c5b50f2652f1b72b40f61f1bd13f2f8c7d53d88.jar" />
     </item>
 
 </items>

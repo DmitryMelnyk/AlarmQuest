@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_alarm">Alarm</string>
+    <string name="menu_stop_watch">Stopwatch</string>
+</resources>
