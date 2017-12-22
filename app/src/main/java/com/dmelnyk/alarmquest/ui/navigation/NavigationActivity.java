@@ -130,7 +130,7 @@ public class NavigationActivity extends AppCompatActivity implements
 
     private DrawerItem createItemFor(int position) {
         return new SimpleItem(screenIcons[position], screenTitles[position])
-                .withIconTint(color(R.color.textColorSecondary))
+                .withIconTint(color(R.color.gray))
                 .withTextTint(color(R.color.textColorPrimary))
                 .withSelectedIconTint(color(R.color.textSelected))
                 .withSelectedTextTint(color(R.color.textSelected));

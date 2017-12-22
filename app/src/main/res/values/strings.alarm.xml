@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alarm_empty_state">Add new alarm</string>
+    <string name="tomorrow">Mon Tue Fri</string>
+    <!--<string name="tomorrow">Tomorrow</string>-->
+    <string name="days_title">Repeat</string>
+</resources>

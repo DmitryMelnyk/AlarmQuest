@@ -6,7 +6,7 @@
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="false"
+        android:smallScreens="true"
         android:xlargeScreens="true" />
 
     <application
@@ -24,11 +24,11 @@
             android:theme="@style/AppTheme2"
             >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
 
         <!--android:autoRemoveFromRecents="true"-->
@@ -38,11 +38,11 @@
         <activity
             android:name=".ui.navigation.NavigationActivity"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
 
         <receiver
@@ -54,7 +54,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ui.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

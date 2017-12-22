@@ -5,33 +5,55 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.dmelnyk.alarmquest.R;
+import com.dmelnyk.alarmquest.model.Alarm;
+import com.dmelnyk.alarmquest.ui.main.core.RecyclerViewModified;
+import com.dmelnyk.alarmquest.ui.main.core.TimePickerFragment;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.dmelnyk.alarmquest.ui.main.core.TimePickerFragment.ARG_ALARM_TIME;
+
 /**
  * Created by d264 on 12/18/17.
  */
 
-public class AlarmFragment extends Fragment {
+public class AlarmFragment extends Fragment implements TimePickerFragment.OnTimeSelectedListener {
 
+    private static final String ALARM_PICKER_TAG = "ALARM_PICKER_TAG";
     @BindView(R.id.fab_add)
     FloatingActionButton mFabAdd;
     @BindView(R.id.rv_alarm_list)
-    RecyclerView mRecyclerViewAlarms;
+    RecyclerViewModified mRecyclerViewAlarms;
     Unbinder unbinder;
     @BindView(R.id.ib_add)
     ImageView mImageViewAdd;
+    @BindView(R.id.empty_view)
+    LinearLayout mEmptyView;
+
+    List<String> alarmDataSet;
+    private AlarmAdapter mAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        alarmDataSet = new ArrayList<>();
+        alarmDataSet.add("8:10");
+    }
 
     @Nullable
     @Override
@@ -49,8 +71,96 @@ public class AlarmFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerViewAlarms.setLayoutManager(linearLayoutManager);
 
-        AlarmAdapter mAdapter = new AlarmAdapter();
+        mRecyclerViewAlarms.setEmptyView(mEmptyView);
+
+        mAdapter = new AlarmAdapter(alarmDataSet);
+        mAdapter.setAlarmChangeListener(new AlarmAdapter.OnAlarmChangeListener() {
+            @Override
+            public void editedAlarm(String alarm) {
+                createEditedAlarmPicker(alarm);
+            }
+
+            @Override
+            public void removedAlarm(String time) {
+                alarmDataSet.remove(time);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onEditDays(String days) {
+                createEditDayPicker(days);
+            }
+        });
         mRecyclerViewAlarms.setAdapter(mAdapter);
+    }
+
+    private void createEditDayPicker(@Nullable String days) {
+        List<String> daysListString = Arrays.asList(days.split(" "));
+        List<Integer> daysListInt = new ArrayList<>();
+
+        String[] dayArr = getResources().getStringArray(R.array.days);
+        for (int i = 0; i < dayArr.length; i++) {
+            if (daysListString.contains(dayArr[i])) {
+                daysListInt.add(i);
+            }
+        }
+
+        Integer[] selectedDays = daysListInt.toArray(new Integer[daysListInt.size()]);
+
+        new MaterialDialog.Builder(getContext())
+                .titleColorRes(R.color.white)
+                .backgroundColorRes(R.color.black)
+                .contentColorRes(R.color.white)
+
+                .title(R.string.days_title)
+                .items(R.array.day_items)
+                .itemsCallbackMultiChoice(selectedDays, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        /**
+                         * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
+                         * returning false here won't allow the newly selected check box to actually be selected
+                         * (or the newly unselected check box to be unchecked).
+                         * See the limited multi choice dialog example in the sample project for details.
+                         **/
+                        updateAlarmDays(which);
+                        return true;
+                    }
+                })
+                .positiveText(R.string.days_choose)
+                .show();
+    }
+
+    private void updateAlarmDays(Integer[] selectedDays) {
+        // TODO
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // restoring alarm picker
+        // dialog
+        TimePickerFragment alarmPicker = (TimePickerFragment) getFragmentManager().findFragmentByTag(ALARM_PICKER_TAG);
+        if (alarmPicker != null) {
+            alarmPicker.setCallbackListener(this);
+        }
+    }
+
+    private void createNewAlarmPicker() {
+        TimePickerFragment dialog = new TimePickerFragment();
+        dialog.setCallbackListener(this);
+        dialog.show(getFragmentManager(), ALARM_PICKER_TAG);
+    }
+
+    private void createEditedAlarmPicker(String time) {
+        TimePickerFragment dialog = new TimePickerFragment();
+        dialog.setCallbackListener(this);
+
+        Bundle args = new Bundle();
+        args.putString(ARG_ALARM_TIME, time);
+
+        dialog.setArguments(args);
+        dialog.show(getFragmentManager(), ALARM_PICKER_TAG);
     }
 
     @Override
@@ -61,6 +171,7 @@ public class AlarmFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mRecyclerViewAlarms.setAdapter(null);
         unbinder.unbind();
     }
 
@@ -68,15 +179,18 @@ public class AlarmFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ib_add:
-                onAddClicked();
+                createNewAlarmPicker();
                 break;
             case R.id.fab_add:
-                onAddClicked();
+                createNewAlarmPicker();
                 break;
         }
     }
 
-    private void onAddClicked() {
-        Toast.makeText(getContext(), "Add", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onTimeSelected(@Nullable Alarm previousAlarmTime, String newAlarmTime) {
+//        alarmDataSet.remove(previousAlarmTime);
+        alarmDataSet.add(newAlarmTime);
+        mAdapter.notifyDataSetChanged();
     }
 }

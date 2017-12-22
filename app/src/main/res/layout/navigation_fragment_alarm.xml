@@ -24,15 +24,6 @@
             android:layout_height="wrap_content"
             tools:ignore="MissingPrefix" />
 
-        <!--<TextView-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:textSize="26sp"-->
-            <!--android:textColor="@color/textColorPrimary"-->
-            <!--android:layout_toRightOf="@+id/nav_f_current_time"-->
-            <!--android:text="@string/navigation_fragment_hours"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-
         <Switch
             android:id="@+id/nav_f_a_switcher"
             android:layout_alignParentRight="true"
@@ -57,7 +48,7 @@
         android:id="@+id/nav_f_a_date"
         android:gravity="center"
         android:textSize="20sp"
-        android:textColor="@color/textColorSecondary"
+        android:textColor="@color/gray"
         android:text="Wednesday, 16 December 2017"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

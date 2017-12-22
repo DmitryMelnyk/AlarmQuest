@@ -22,8 +22,13 @@
         android:layout_height="@dimen/dimen_56dp"
         app:itemTextColor="@drawable/bn_item_color_state"
         app:itemIconTint="@drawable/bn_item_color_state"
-        app:itemBackground="@color/black"
         app:menu="@menu/navigation_items"
         />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@id/bn_navigation"
+        android:background="@color/lightBlue"
+        />
 </RelativeLayout>

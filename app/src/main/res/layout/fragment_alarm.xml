@@ -27,9 +27,48 @@
         android:layout_marginRight="@dimen/dimen16dp"
         android:layout_marginTop="@dimen/dimen36dp"
         android:src="@drawable/ic_add_black_24dp"
+        android:tint="@color/white"
         />
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/dimen100dp"
+            android:layout_height="@dimen/dimen100dp"
+            android:src="@drawable/ic_alarm_empty_state"
+            android:tint="@color/colorAccent2"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_36dp"
+            android:layout_marginBottom="@dimen/dimen_36dp"
+            android:text="@string/alarm_empty_state"
+            android:textSize="@dimen/dimen24sp"
+            android:textColor="@color/white"
+            />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dimen16dp"
+            android:src="@drawable/ic_add_black_24dp"
+            android:tint="@color/white"
+            app:fabSize="normal"
+            />
+    </LinearLayout>
+
+    <com.dmelnyk.alarmquest.ui.main.core.RecyclerViewModified
         android:id="@+id/rv_alarm_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,16 +76,4 @@
         android:layout_marginTop="@dimen/dimen_56dp"
         />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dimen16dp"
-        android:src="@drawable/ic_add_black_24dp"
-        android:tint="@color/white"
-        app:fabSize="normal"
-        />
 </RelativeLayout>

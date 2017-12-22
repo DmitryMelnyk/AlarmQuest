@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TimePickerTheme" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
+
+        <!--<item name="showTitle">false</item>-->
+        <!--<item name="colorControlActivated">@color/colorAccent</item>-->
+        <!--<item name="android:textColorPrimary">@color/white</item>-->
+        <!--<item name="android:textColorSecondary">@color/white</item>-->
+        <item name="android:backgroundTint">@color/black</item>
+
+    </style>
+</resources>

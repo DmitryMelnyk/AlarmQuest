@@ -5,6 +5,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.dmelnyk.alarmquest.R;
+import com.dmelnyk.alarmquest.data.DataRepository;
+import com.dmelnyk.alarmquest.db.AppDatabase;
+import com.dmelnyk.alarmquest.db.AppExecutors;
 import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
@@ -15,6 +18,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 
 public class AlarmQuestApplication extends Application {
+
+    private AppExecutors mAppExecutors;
 
     // Dagger2 AppComponent
     @NonNull
@@ -33,6 +38,8 @@ public class AlarmQuestApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mAppExecutors = new AppExecutors();
 
         Timber.plant(new Timber.DebugTree() {
             @Override
@@ -57,5 +64,13 @@ public class AlarmQuestApplication extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+    }
+
+    public AppDatabase getDatabase() {
+        return AppDatabase.getInstance(this, mAppExecutors);
+    }
+
+    public DataRepository getRepository() {
+        return DataRepository.getInstance(getDatabase());
     }
 }

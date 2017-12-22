@@ -10,6 +10,25 @@
         <item>Выйти</item>
     </string-array>
 
+    <string-array name="day_items">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+    <string-array name="days">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+
     <array name="nav_titles_icon">
         <item>@drawable/nav_alarm</item>
         <item>@drawable/nav_instruction</item>

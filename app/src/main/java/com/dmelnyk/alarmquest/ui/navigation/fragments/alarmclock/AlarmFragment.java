@@ -34,7 +34,8 @@ import timber.log.Timber;
  * Created by d264 on 6/11/17.
  */
 
-public class AlarmFragment extends Fragment implements Contract.IAlarmFragmentView, TimePickerDialog.OnTimeSetListener, CompoundButton.OnCheckedChangeListener {
+public class AlarmFragment extends Fragment implements Contract.IAlarmFragmentView,
+        TimePickerDialog.OnTimeSetListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String TIME_PATTERN = "HH:mm";
 
