@@ -2,50 +2,60 @@ package com.dmelnyk.alarmquest.ui.main;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.ui.main.fragments.alarm.AlarmFragment;
-import com.dmelnyk.alarmquest.ui.main.fragments.stopwatch.AlarmListFragment;
+import com.dmelnyk.alarmquest.ui.common.BaseActivity;
+import com.dmelnyk.alarmquest.ui.main.alarm.view.AlarmFragment;
+import com.dmelnyk.alarmquest.ui.main.stopwatch.view.AlarmListFragment;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.bn_navigation)
-    BottomNavigationView mBottmoNavigator;
+    BottomNavigationView mBottomNavigator;
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         setupViews();
+
+        if (savedInstanceState == null) {
+            // set central fragment
+            addFragment(R.id.main_fragment_container, new AlarmListFragment());
+            mBottomNavigator.setSelectedItemId(R.id.action_alarm);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbinder.unbind();
+        super.onDestroy();
     }
 
     private void setupViews() {
-        mBottmoNavigator.setOnNavigationItemSelectedListener(menu -> {
+        mBottomNavigator.setOnNavigationItemSelectedListener(menu -> {
             menu.setEnabled(true);
 
             switch (menu.getItemId()) {
                 case R.id.action_stop_watch:
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment_container, new AlarmListFragment())
-                            .commit();
+                    addFragment(R.id.main_fragment_container, new AlarmFragment());
                     break;
                 case R.id.action_alarm:
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment_container, new AlarmFragment())
-                            .commit();
+                    addFragment(R.id.main_fragment_container, new AlarmListFragment());
                     break;
                 case R.id.action_settings:
                     break;
             }
             return true;
         });
-
-        mBottmoNavigator.setSelectedItemId(R.id.action_alarm);
     }
 }

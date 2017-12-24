@@ -1,7 +1,6 @@
 package com.dmelnyk.alarmquest.ui.alarm;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.application.AlarmQuestApplication;
+import com.dmelnyk.alarmquest.application.App;
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
 import com.dmelnyk.alarmquest.ui.alarm.di.AlarmQuestModule;
 import com.dmelnyk.alarmquest.ui.alarm.questfragment.QuestFragment;
@@ -42,7 +41,7 @@ public class AlarmQuestActivity extends AppCompatActivity
 
     private PickerItem mSelectedItem;
 
-    @Inject
+//   todo @Inject
     Contract.IAlarmQuestPresenter presenter;
 
     @Override
@@ -54,8 +53,8 @@ public class AlarmQuestActivity extends AppCompatActivity
         int questionToSolveCount = getIntent().getIntExtra(EXTRA_QUESTION_COUNT, 2);
 
         // initialize dagger2
-        AlarmQuestApplication.get(this).getAppComponent()
-                .add(new AlarmQuestModule()).inject(this);
+//        todo:App.get(this).getAppComponent()
+//                .add(new AlarmQuestModule()).inject(this);
 
         initializeViews();
         presenter.bindView(this, questionToSolveCount);

@@ -4,15 +4,11 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 
-import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.application.AlarmQuestApplication;
+import com.dmelnyk.alarmquest.application.App;
 import com.dmelnyk.alarmquest.db.entity.AlarmEntity;
-import com.dmelnyk.alarmquest.ui.main.core.DayConverter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,27 +23,14 @@ public class AlarmListViewModel extends AndroidViewModel {
     public AlarmListViewModel(@NonNull Application application) {
         super(application);
 
-        String[] days = application.getResources().getStringArray(R.array.days);
-
         mObservableAlarms = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         mObservableAlarms.setValue(null);
 
         LiveData<List<AlarmEntity>> rawAlarms =
-                ((AlarmQuestApplication) application).getRepository().getAlarms();
+                ((App) application).getRepository().getAlarms();
 
-        LiveData<List<AlarmEntity>> alarms = Transformations.map(rawAlarms, alarmList -> {
-            List<AlarmEntity> transformedAlarmList = new ArrayList<>();
-            for (AlarmEntity rawAlarm : alarmList) {
-                AlarmEntity transformedAlarm = new AlarmEntity(rawAlarm);
-                transformedAlarm.setDays(DayConverter.convertDayToWordView(days, rawAlarm.getDays()));
-                transformedAlarmList.add(transformedAlarm);
-            }
-
-            return transformedAlarmList;
-        });
-
-        mObservableAlarms.addSource(alarms, mObservableAlarms::setValue);
+        mObservableAlarms.addSource(rawAlarms, mObservableAlarms::setValue);
     }
 
     /**

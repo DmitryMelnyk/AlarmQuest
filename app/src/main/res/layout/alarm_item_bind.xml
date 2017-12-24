@@ -7,8 +7,8 @@
             name="alarm"
             type="com.dmelnyk.alarmquest.model.Alarm" />
         <variable
-            name="callback"
-            type="com.dmelnyk.alarmquest.ui.main.fragments.stopwatch.OnAlarmClickCallback" />
+            name="presenter"
+            type="com.dmelnyk.alarmquest.ui.main.stopwatch.presenter.AlarmListPresenter" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -18,9 +18,10 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onLongClick="@{(view) -> callback.removedAlarm(view, alarm)}">
+        android:onLongClick="@{(view) -> presenter.onRemoveAlarmClicked(alarm)}">
 
         <LinearLayout
+            android:id="@+id/ll_time_and_days"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -36,7 +37,7 @@
                 android:id="@+id/item_tv_alarm_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> callback.editedAlarm(alarm)}"
+                android:onClick="@{() -> presenter.onEditAlarmClicked(alarm)}"
                 android:text="@{alarm.time}"
                 android:textColor="@color/colorAccent2"
                 android:textSize="46dp" />
@@ -45,10 +46,11 @@
                 android:id="@+id/item_tv_alarm_days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> callback.onEditedDays(alarm)}"
-                android:text="@{alarm.days}"
+                android:onClick="@{() -> presenter.onEditDayClicked(alarm)}"
                 android:textColor="@color/colorAccent2"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                app:daysText="@{alarm.days}"
+                />
         </LinearLayout>
 
 
@@ -58,7 +60,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:checked="@{alarm.enable}"
-            android:onClick="@{() -> callback.onCheckedChanged(alarm)}"
+            android:onClick="@{() -> presenter.onCheckedChanged(alarm)}"
             android:elevation="8dp"
             app:kswBackDrawable="@drawable/switch_bg"
             app:kswThumbColor="@color/colorPrimaryDark"
@@ -81,6 +83,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_tv_alarm_days" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_time_and_days" />
     </android.support.constraint.ConstraintLayout>
 </layout>

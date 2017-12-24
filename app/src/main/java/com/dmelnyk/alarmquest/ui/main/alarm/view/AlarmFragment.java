@@ -1,25 +1,30 @@
-package com.dmelnyk.alarmquest.ui.main.fragments.alarm;
+package com.dmelnyk.alarmquest.ui.main.alarm.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.model.Alarm;
+import com.dmelnyk.alarmquest.ui.common.view.BaseViewFragment;
+import com.dmelnyk.alarmquest.ui.main.alarm.AlarmAdapter;
+import com.dmelnyk.alarmquest.ui.main.alarm.presenter.AlarmPresenter;
 import com.dmelnyk.alarmquest.ui.main.core.RecyclerViewModified;
 import com.dmelnyk.alarmquest.ui.main.core.TimePickerFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +37,8 @@ import static com.dmelnyk.alarmquest.ui.main.core.TimePickerFragment.ARG_ALARM_T
  * Created by d264 on 12/18/17.
  */
 
-public class AlarmFragment extends Fragment implements TimePickerFragment.OnTimeSelectedListener {
+public class AlarmFragment extends BaseViewFragment<AlarmPresenter>
+        implements AlarmView, TimePickerFragment.OnTimeSelectedListener {
 
     private static final String ALARM_PICKER_TAG = "ALARM_PICKER_TAG";
     @BindView(R.id.fab_add)
@@ -47,6 +53,15 @@ public class AlarmFragment extends Fragment implements TimePickerFragment.OnTime
 
     List<String> alarmDataSet;
     private AlarmAdapter mAdapter;
+
+    @Inject
+    public AlarmFragment() {
+    }
+
+    @Override
+    public void showSomething(String something) {
+        Toast.makeText(activityContext, something, Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +83,7 @@ public class AlarmFragment extends Fragment implements TimePickerFragment.OnTime
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerViewAlarms.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activityContext);
         mRecyclerViewAlarms.setLayoutManager(linearLayoutManager);
 
         mRecyclerViewAlarms.setEmptyView(mEmptyView);
@@ -107,7 +122,7 @@ public class AlarmFragment extends Fragment implements TimePickerFragment.OnTime
 
         Integer[] selectedDays = daysListInt.toArray(new Integer[daysListInt.size()]);
 
-        new MaterialDialog.Builder(getContext())
+        new MaterialDialog.Builder(activityContext)
                 .titleColorRes(R.color.white)
                 .backgroundColorRes(R.color.black)
                 .contentColorRes(R.color.white)
@@ -139,28 +154,28 @@ public class AlarmFragment extends Fragment implements TimePickerFragment.OnTime
     public void onResume() {
         super.onResume();
         // restoring alarm picker
-        // dialog
-        TimePickerFragment alarmPicker = (TimePickerFragment) getFragmentManager().findFragmentByTag(ALARM_PICKER_TAG);
-        if (alarmPicker != null) {
-            alarmPicker.setCallbackListener(this);
-        }
+        // dialog todo
+//        TimePickerFragment alarmPicker = (TimePickerFragment) getFragmentManager().findFragmentByTag(ALARM_PICKER_TAG);
+//        if (alarmPicker != null) {
+//            alarmPicker.setCallbackListener(this);
+//        }
     }
 
     private void createNewAlarmPicker() {
         TimePickerFragment dialog = new TimePickerFragment();
-        dialog.setCallbackListener(this);
-        dialog.show(getFragmentManager(), ALARM_PICKER_TAG);
+        // todo
+//        dialog.show(getFragmentManager(), ALARM_PICKER_TAG);
     }
 
     private void createEditedAlarmPicker(String time) {
         TimePickerFragment dialog = new TimePickerFragment();
-        dialog.setCallbackListener(this);
 
         Bundle args = new Bundle();
         args.putString(ARG_ALARM_TIME, time);
 
         dialog.setArguments(args);
-        dialog.show(getFragmentManager(), ALARM_PICKER_TAG);
+        // todo
+//        dialog.show(getFragmentManager(), ALARM_PICKER_TAG);
     }
 
     @Override

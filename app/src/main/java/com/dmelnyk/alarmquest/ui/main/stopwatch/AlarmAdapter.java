@@ -1,16 +1,15 @@
-package com.dmelnyk.alarmquest.ui.main.fragments.stopwatch;
+package com.dmelnyk.alarmquest.ui.main.stopwatch;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.databinding.AlarmItemBindBinding;
 import com.dmelnyk.alarmquest.model.Alarm;
+import com.dmelnyk.alarmquest.ui.main.stopwatch.presenter.AlarmListPresenter;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -22,13 +21,13 @@ import java.util.List;
 
 public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
 
+    @Nullable
+    private final AlarmListPresenter mPresenter;
+
     List<? extends Alarm> mAlarmList;
 
-    @Nullable
-    private OnAlarmClickCallback mAlarmClickCallback;
-
-    public AlarmAdapter(@Nullable OnAlarmClickCallback clickCallback) {
-        mAlarmClickCallback = clickCallback;
+    public AlarmAdapter(@Nullable AlarmListPresenter clickCallback) {
+        mPresenter = clickCallback;
     }
 
     public void setAlarmList(final List<? extends Alarm> alarmList) {
@@ -73,7 +72,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         AlarmItemBindBinding binding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()),
                         R.layout.alarm_item_bind, parent, false);
-        binding.setCallback(mAlarmClickCallback);
+        binding.setPresenter(mPresenter);
         return new AlarmViewHolder(binding);
     }
 

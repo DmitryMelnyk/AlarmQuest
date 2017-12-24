@@ -1,8 +1,7 @@
 package com.dmelnyk.alarmquest.application;
 
+import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.data.DataRepository;
@@ -10,6 +9,11 @@ import com.dmelnyk.alarmquest.db.AppDatabase;
 import com.dmelnyk.alarmquest.db.AppExecutors;
 import com.squareup.leakcanary.LeakCanary;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -17,27 +21,26 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * Created by dmitry on 23.05.17.
  */
 
-public class AlarmQuestApplication extends Application {
+public class App extends Application implements HasActivityInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Activity> activityInjector;
 
     private AppExecutors mAppExecutors;
 
-    // Dagger2 AppComponent
-    @NonNull
-    private AppComponent appComponent;
-
-    @NonNull
-    public AppComponent getAppComponent() {
-        return appComponent;
-    }
-
-    @NonNull
-    public static AlarmQuestApplication get(@NonNull Context context) {
-        return (AlarmQuestApplication) context.getApplicationContext();
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return activityInjector;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // to inject application Context
+        DaggerAppComponent.builder().create(this).inject(this);
+//         to use variant without injecting context uncomment this
+//        DaggerAppComponent.create().inject(this);
 
         mAppExecutors = new AppExecutors();
 
@@ -55,10 +58,6 @@ public class AlarmQuestApplication extends Application {
         }
         LeakCanary.install(this);
 
-        appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .build();
-
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/fonts.ttf")
                 .setFontAttrId(R.attr.fontPath)
@@ -66,7 +65,7 @@ public class AlarmQuestApplication extends Application {
         );
     }
 
-    public AppDatabase getDatabase() {
+    private AppDatabase getDatabase() {
         return AppDatabase.getInstance(this, mAppExecutors);
     }
 

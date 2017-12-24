@@ -1,4 +1,4 @@
-package com.dmelnyk.alarmquest.ui.main.fragments.stopwatch;
+package com.dmelnyk.alarmquest.ui.main.stopwatch;
 
 import android.view.View;
 

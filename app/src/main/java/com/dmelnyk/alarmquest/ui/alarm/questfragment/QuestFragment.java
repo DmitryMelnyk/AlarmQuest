@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
 
-import com.dmelnyk.alarmquest.ui.alarm.questfragment.di.DaggerQuestComponent;
 import com.dmelnyk.alarmquest.utils.*;
 import javax.inject.Inject;
 
@@ -46,7 +45,7 @@ public class QuestFragment extends Fragment implements Contract.IQuestView {
     @BindView(R.id.answer3) Button answer3;
     @BindView(R.id.answer4) Button answer4;
 
-    @Inject
+//    @Inject
     Contract.IQuestPresenter questPresenter;
     private Unbinder unbinder;
 
@@ -94,7 +93,7 @@ public class QuestFragment extends Fragment implements Contract.IQuestView {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        DaggerQuestComponent.create().inject(this);
+//        DaggerQuestComponent.create().inject(this);
     }
 
     @Nullable

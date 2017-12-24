@@ -27,6 +27,9 @@
         <item>Fri</item>
         <item>Sat</item>
         <item>Sun</item>
+        <item>Every day</item>
+        <item>Today</item>
+        <item>Tomorrow</item>
     </string-array>
 
     <array name="nav_titles_icon">

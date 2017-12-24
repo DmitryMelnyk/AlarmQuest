@@ -1,6 +1,5 @@
-package com.dmelnyk.alarmquest.ui.main.fragments.alarm;
+package com.dmelnyk.alarmquest.ui.main.alarm;
 
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

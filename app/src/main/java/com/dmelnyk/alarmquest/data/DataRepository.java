@@ -2,15 +2,12 @@ package com.dmelnyk.alarmquest.data;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.util.Log;
 
 import com.dmelnyk.alarmquest.db.AppDatabase;
 import com.dmelnyk.alarmquest.db.entity.AlarmEntity;
 import com.dmelnyk.alarmquest.model.Alarm;
-import com.dmelnyk.alarmquest.ui.main.core.DayConverter;
 
 import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by d264 on 12/21/17.
@@ -65,11 +62,6 @@ public class DataRepository {
      * Updates alarm with days in number look ("0 1 6")
      * @param alarm
      */
-    public void updateAlarmDays(final Alarm alarm) {
-        Runnable task = () -> mDatabase.alarmDao().update((AlarmEntity) alarm);
-        new Thread(task).start();
-    }
-
      public void updateAlarm(final Alarm alarm) {
         Runnable task = () -> mDatabase.alarmDao().update((AlarmEntity) alarm);
         new Thread(task).start();
