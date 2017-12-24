@@ -1,27 +1,21 @@
 package com.dmelnyk.alarmquest.application;
 
-import com.dmelnyk.alarmquest.ui.alarm.di.AlarmQuestComponent;
-import com.dmelnyk.alarmquest.ui.alarm.di.AlarmQuestModule;
-import com.dmelnyk.alarmquest.ui.navigation.di.NavigationComponent;
-import com.dmelnyk.alarmquest.ui.navigation.di.NavigationModule;
-import com.dmelnyk.alarmquest.ui.navigation.fragments.alarmclock.di.AlarmFragmentComponent;
-import com.dmelnyk.alarmquest.ui.navigation.fragments.alarmclock.di.AlarmFragmentModule;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
+import dagger.android.AndroidInjector;
 
 /**
  * Created by dmitry on 29.04.17.
  */
-
+/**
+ * Injects application dependencies.
+ */
 @Singleton
-@Component(modules = {AppModule.class})
-public interface AppComponent {
+@Component(modules = AppModule.class)
+public interface AppComponent extends AndroidInjector<App> {
 
-    AlarmQuestComponent add(AlarmQuestModule module);
-
-    NavigationComponent add(NavigationModule module);
-
-    AlarmFragmentComponent add(AlarmFragmentModule module);
+    @Component.Builder
+    abstract class Builder extends AndroidInjector.Builder<App> {
+    }
 }

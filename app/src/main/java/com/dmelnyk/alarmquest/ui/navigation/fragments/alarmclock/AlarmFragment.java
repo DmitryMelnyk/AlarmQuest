@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.android.datetimepicker.time.RadialPickerLayout;
 import com.android.datetimepicker.time.TimePickerDialog;
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.application.AlarmQuestApplication;
+import com.dmelnyk.alarmquest.application.App;
 import com.dmelnyk.alarmquest.ui.navigation.fragments.alarmclock.di.AlarmFragmentModule;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +49,7 @@ public class AlarmFragment extends Fragment implements Contract.IAlarmFragmentVi
         void onAlarmSelected(String time);
     }
 
-    @Inject
+//    @Inject
     Contract.IAlarmFragmentPresenter presenter;
 
     @BindView(R.id.nav_f_a_current_time)
@@ -80,8 +80,8 @@ public class AlarmFragment extends Fragment implements Contract.IAlarmFragmentVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AlarmQuestApplication.get(getContext()).getAppComponent()
-                .add(new AlarmFragmentModule()).inject(this);
+//        todo:App.get(getContext()).getAppComponent()
+//                .add(new AlarmFragmentModule()).inject(this);
 
         calendar = Calendar.getInstance();
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.getDefault());

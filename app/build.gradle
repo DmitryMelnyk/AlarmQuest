@@ -48,6 +48,9 @@ ext {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    def daggerVersion = '2.14'
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -74,8 +77,12 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.5.1'
 
     // dagger2
-    compile 'com.google.dagger:dagger:2.10'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    compile "com.google.dagger:dagger:$daggerVersion"
+    compile "com.google.dagger:dagger-android:$daggerVersion"
+    compile "com.google.dagger:dagger-android-support:$daggerVersion"
 
     // leakcanary
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"

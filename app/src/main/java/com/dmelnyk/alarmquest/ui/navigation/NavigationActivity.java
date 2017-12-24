@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.application.AlarmQuestApplication;
+import com.dmelnyk.alarmquest.application.App;
 import com.dmelnyk.alarmquest.ui.navigation.Contract.INavigationPresenter;
 import com.dmelnyk.alarmquest.ui.navigation.di.NavigationModule;
 import com.dmelnyk.alarmquest.ui.navigation.fragments.alarmclock.AlarmFragment;
@@ -42,9 +42,9 @@ public class NavigationActivity extends AppCompatActivity implements
 
     private TextView nearestAlarm;
 
-    @Inject
+//    @Inject
     INavigationPresenter presenter;
-    @Inject
+//    @Inject
     NavUtil navUtil;
 
     private static final int NAV_ALARM_POSITION = 0;
@@ -65,8 +65,8 @@ public class NavigationActivity extends AppCompatActivity implements
 //        setSupportActionBar(toolbar);
 
         // initialize dagger2
-        AlarmQuestApplication.get(this).getAppComponent()
-                .add(new NavigationModule()).inject(this);
+//        App.get(this).getAppComponent()
+//                .add(new NavigationModule()).inject(this);
 
         new SlidingRootNavBuilder(this)
 //                .withToolbarMenuToggle(toolbar)

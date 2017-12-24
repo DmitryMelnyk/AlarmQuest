@@ -1,29 +1,32 @@
 package com.dmelnyk.alarmquest.application;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
+import android.app.Application;
+
+import com.dmelnyk.alarmquest.inject.PerActivity;
+import com.dmelnyk.alarmquest.ui.main.MainActivity;
+import com.dmelnyk.alarmquest.ui.main.MainActivityModule;
 
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
+import dagger.android.ContributesAndroidInjector;
+import dagger.android.support.AndroidSupportInjectionModule;
 
 /**
  * Created by dmitry on 29.04.17.
  */
 
-@Module
-public class AppModule {
+@Module(includes = AndroidSupportInjectionModule.class)
+abstract class AppModule {
 
-    private final Context appContext;
-
-    public AppModule(@NonNull Context context) {
-        appContext = context;
-    }
-
-    @Provides
+    @Binds
     @Singleton
-    Context provideContext() {
-        return appContext;
-    }
+    abstract Application application(App app);
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = MainActivityModule.class)
+    abstract MainActivity mainActivityInjector();
+
+    // add other activities
 }
