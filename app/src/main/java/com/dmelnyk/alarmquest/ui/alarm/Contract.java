@@ -2,6 +2,8 @@ package com.dmelnyk.alarmquest.ui.alarm;
 
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
 
+import java.util.List;
+
 /**
  * Created by d264 on 6/7/17.
  */
@@ -15,17 +17,14 @@ public class Contract {
         // Called after successfully answering for all questions
         void success();
 
-        void setBubbleTitles(String[] titles);
-
-        void showHasAnsweredMessage();
+        void setQuestions(List<String> titles, QuestionData[] questions);
     }
 
     public interface IAlarmQuestPresenter {
         void bindView(IAlarmQuestView view, int questionToSolveCount);
         void unbindView();
-        void pickQuestion(String questionTitle);
         void isAnswerCorrect(boolean isCorrect);
 
-        void refreshQuestions();
+        void questionSwiped();
     }
 }

@@ -3,12 +3,12 @@ package com.dmelnyk.alarmquest;
 import android.content.Context;
 import android.test.AndroidTestCase;
 
-import com.dmelnyk.alarmquest.business.alarm.IQuestInteractor;
 import com.dmelnyk.alarmquest.business.alarm.QuestInteractor;
+import com.dmelnyk.alarmquest.business.alarm.QuestInteractorImpl;
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
 import com.dmelnyk.alarmquest.data.DataUtil;
-import com.dmelnyk.alarmquest.data.question.IQuestionRepository;
-import com.dmelnyk.alarmquest.data.question.QuestionRepository;
+import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionRepository;
+import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionRepositoryImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,14 +25,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExampleUnitTest extends AndroidTestCase {
-    IQuestInteractor interactor;
+    QuestInteractor interactor;
 
     @Mock Context context;
 
     @Before
     public void setUp() {
-        IQuestionRepository repository = new QuestionRepository(new DataUtil(context));
-        interactor = new QuestInteractor(repository);
+        QuestionRepository repository = new QuestionRepositoryImpl(new DataUtil(context));
+        interactor = new QuestInteractorImpl(repository);
     }
 
     @Test

@@ -27,6 +27,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "basic-db";
     private static AppDatabase sInstance;
+    private final static String tag = "AppDatabase";
 
     public abstract AlarmDao alarmDao();
 
@@ -50,28 +51,20 @@ public abstract class AppDatabase extends RoomDatabase {
      * The SQLite database is only created when it's accessed for the first time.
      */
     private static AppDatabase buildDatabase(final Context appContext, AppExecutors executors) {
-        Log.e("!!!", "building db");
+        Log.e(tag, "building db");
         return Room.databaseBuilder(appContext, AppDatabase.class, DATABASE_NAME)
                 .addCallback(new Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
                         super.onCreate(db);
                         executors.diskIo().execute(() -> {
-                            // Add a delay to simulate a long-running operation
-                            addDelay();
                             // Generate the data for pre-population
                             AppDatabase database = AppDatabase.getInstance(appContext, executors);
-                            List<AlarmEntity> alarms = DataGenerator.generateAlarms();
-                            Log.e("!!!", "AppDatabase. Generated alarms=" + alarms.toString());
-
-                            // remove this data
-//                            insertData(database, alarms);
                             // notify that the database was created and it's ready to be used
                             database.setDatabaseCreated();
                         });
                     }
                 }).build();
-
     }
 
 
@@ -93,13 +86,6 @@ public abstract class AppDatabase extends RoomDatabase {
         database.runInTransaction(() -> {
             database.alarmDao().insertAll(alarms);
         });
-    }
-
-    private static void addDelay() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ignored) {
-        }
     }
 
     public LiveData<Boolean> getDatabaseCreated() {

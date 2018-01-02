@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.dmelnyk.alarmquest.ui.main.core.BaseDialogCallback;
 import com.dmelnyk.alarmquest.ui.main.core.BaseDialogFragment;
@@ -19,6 +20,8 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.HasSupportFragmentInjector;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by d264 on 12/23/17.
@@ -27,14 +30,14 @@ import dagger.android.support.HasSupportFragmentInjector;
 public abstract class BaseFragment extends Fragment
         implements HasSupportFragmentInjector {
 
-    @Inject
-    protected Context activityContext;
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+//    @Inject
+//    protected Context activityContext;
 
     @Inject
     @Named(BaseFragmentModule.CHILD_FRAGMENT_MANAGER)
     protected FragmentManager childFragmentManager;
 
-    // todo ?
     @Inject
     DispatchingAndroidInjector<Fragment> childFragmentInjector;
 
@@ -48,6 +51,12 @@ public abstract class BaseFragment extends Fragment
     }
 
     @Override
+    public void onPause() {
+        compositeDisposable.clear();
+        super.onPause();
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(EXT_DIALOG, displayedDialogTag);
@@ -56,6 +65,7 @@ public abstract class BaseFragment extends Fragment
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
+        Log.e("baseFragment", "onViewStateRestored");
         // if needed bind ButterKnife.bind(this, getView());
         if (savedInstanceState != null) {
             displayedDialogTag = savedInstanceState.getString(EXT_DIALOG);
@@ -63,6 +73,7 @@ public abstract class BaseFragment extends Fragment
     }
 
     protected void setDialogCallback(BaseDialogCallback callback) {
+        Log.e("baseFragment", "setDialogCallback=" + callback);
         if (displayedDialogTag != null) {
             BaseDialogFragment fragment = (BaseDialogFragment)
                     childFragmentManager.findFragmentByTag(displayedDialogTag);
@@ -86,5 +97,9 @@ public abstract class BaseFragment extends Fragment
     protected final void showDialog(DialogFragment dialog, String tag) {
         displayedDialogTag = tag;
         dialog.show(childFragmentManager, tag);
+    }
+
+    protected void addSubscription(Disposable disposable) {
+        this.compositeDisposable.add(disposable);
     }
 }

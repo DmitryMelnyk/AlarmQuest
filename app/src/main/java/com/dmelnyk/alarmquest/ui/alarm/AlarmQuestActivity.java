@@ -2,111 +2,124 @@ package com.dmelnyk.alarmquest.ui.alarm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.application.App;
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
-import com.dmelnyk.alarmquest.ui.alarm.di.AlarmQuestModule;
-import com.dmelnyk.alarmquest.ui.alarm.questfragment.QuestFragment;
-import com.dmelnyk.alarmquest.utils.MyBounceInterpolator;
+import com.dmelnyk.alarmquest.ui.questfragment.QuestFragment;
+import com.dmelnyk.alarmquest.ui.questfragment.QuestionAdapter;
 import com.dmelnyk.alarmquest.utils.AudioService;
-import com.igalata.bubblepicker.BubblePickerListener;
-import com.igalata.bubblepicker.adapter.BubblePickerAdapter;
-import com.igalata.bubblepicker.model.BubbleGradient;
-import com.igalata.bubblepicker.model.PickerItem;
-import com.igalata.bubblepicker.rendering.BubblePicker;
+import com.dmelnyk.alarmquest.utils.MyBounceInterpolator;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import me.yuqirong.cardswipelayout.CardConfig;
+import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
+import me.yuqirong.cardswipelayout.CardLayoutManager;
+import me.yuqirong.cardswipelayout.OnSwipeListener;
 
 public class AlarmQuestActivity extends AppCompatActivity
-    implements Contract.IAlarmQuestView, QuestFragment.SolvedQuestCallbackListener {
+    implements Contract.IAlarmQuestView,
+        QuestFragment.SolvedQuestCallbackListener,
+        HasSupportFragmentInjector {
 
     public static final String EXTRA_QUESTION_COUNT = "Questions_toSolve_count";
 
-    BubblePicker picker;
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentInjector;
+
+    RecyclerView picker;
     QuestFragment questFragment;
     TextView leftToSolveQuestion;
 
     Animation scaleAnimation;
 
-    private PickerItem mSelectedItem;
-
-//   todo @Inject
+    @Inject
     Contract.IAlarmQuestPresenter presenter;
+    private int mQuestionToSolveCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AndroidInjection.inject(this);
         setContentView(R.layout.activity_alarm_quest);
 
         // Default number of questions to solve is 2
-        int questionToSolveCount = getIntent().getIntExtra(EXTRA_QUESTION_COUNT, 2);
-
-        // initialize dagger2
-//        todo:App.get(this).getAppComponent()
-//                .add(new AlarmQuestModule()).inject(this);
+        mQuestionToSolveCount = getIntent().getIntExtra(EXTRA_QUESTION_COUNT, 2);
 
         initializeViews();
-        presenter.bindView(this, questionToSolveCount);
+        presenter.bindView(this, mQuestionToSolveCount);
     }
 
-    private void setAdapter(String[] titles) {
-
-        BubblePickerAdapter adapter = new BubblePickerAdapter() {
-            @Override
-            public int getTotalCount() {
-                return titles.length;
-            }
-
-            @NotNull
-            @Override
-            public PickerItem getItem(int position) {
-                PickerItem item = new PickerItem();
-                item.setTitle(titles[position]);
-                item.setGradient(new BubbleGradient(
-                        ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
-                        ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark),
-                        BubbleGradient.VERTICAL));
-
-                item.setTextColor(ContextCompat.getColor(AlarmQuestActivity.this, R.color.white));
-                return item;
-            }
-        };
+    @Override
+    public void setQuestions(List<String> titles, QuestionData[] questions) {
+        picker = (RecyclerView) findViewById(R.id.picker);
+        picker.setItemAnimator(new DefaultItemAnimator());
+        QuestionAdapter adapter = new QuestionAdapter(titles);
         picker.setAdapter(adapter);
-
-        BubblePickerListener listener = new BubblePickerListener() {
+        CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(
+                adapter, titles);
+        cardCallback.setOnSwipedListener(new OnSwipeListener<String>() {
             @Override
-            public void onBubbleSelected(@NotNull PickerItem pickerItem) {
-                // deselect previousSelectedItem
-                if (mSelectedItem != null) {
-                    mSelectedItem.setSelected(false);
+            public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
+                QuestionAdapter.QuestionHolder myHolder = (QuestionAdapter.QuestionHolder) viewHolder;
+                viewHolder.itemView.setAlpha(1 - Math.abs(ratio) * 0.2f);
+                if (direction == CardConfig.SWIPING_LEFT) {
+                    myHolder.binding.getRoot().setAlpha(Math.abs(ratio));
+                } else if (direction == CardConfig.SWIPING_RIGHT) {
+                    myHolder.binding.getRoot().setAlpha(Math.abs(ratio));
                 }
-                mSelectedItem = pickerItem;
-                String title = pickerItem.getTitle();
-                presenter.pickQuestion(title);
             }
 
             @Override
-            public void onBubbleDeselected(@NotNull PickerItem pickerItem) { /* NOP */ }
-        };
-        picker.setListener(listener);
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, String s, int direction) {
+                presenter.questionSwiped();
+            }
+
+            @Override
+            public void onSwipedClear() {
+                // todo show dialog or load another data
+                showAlertDialog();
+            }
+        });
+
+        final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
+        final CardLayoutManager layoutManager = new CardLayoutManager(picker, touchHelper);
+        picker.setLayoutManager(layoutManager);
+        touchHelper.attachToRecyclerView(picker);
+
+        showStartingDialog();
+    }
+
+    private void showStartingDialog() {
+        String body = String.format(getString(R.string.dialog_quest), mQuestionToSolveCount);
+        new MaterialDialog.Builder(this)
+                .title(R.string.app_name)
+                .content(body)
+                .positiveText(R.string.dialog_go)
+                .backgroundColorRes(R.color.black)
+                .titleColorRes(R.color.white)
+                .contentColorRes(R.color.white)
+                .show();
     }
 
     private void initializeViews() {
-        picker = (BubblePicker) findViewById(R.id.picker);
-        picker.setBubbleSize(100);
-//        picker.setCenterImmediately(true);
-
         questFragment = (QuestFragment) getSupportFragmentManager().findFragmentById(R.id.questFragment);
 
         leftToSolveQuestion = (TextView) findViewById(R.id.left_to_solve_questions);
@@ -119,16 +132,25 @@ public class AlarmQuestActivity extends AppCompatActivity
     }
 
     public void showAlertDialog() {
-        SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText(getString(R.string.alarm_clock_off))
-                .setContentText(getString(R.string.success_message));
-        dialog.setOnDismissListener(view -> AlarmQuestActivity.this.finish());
-        dialog.show();
+        new MaterialDialog.Builder(this)
+                .title(R.string.alarm_clock_off)
+                .content(R.string.success_message)
+                .positiveText(R.string.dialog_ok)
+                .backgroundColorRes(R.color.black)
+                .titleColorRes(R.color.white)
+                .contentColorRes(R.color.white)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        AlarmQuestActivity.this.finish();
+                    }
+                })
+                .show();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        picker.onResume();
         //TODO
 //        Intent startIntent = new Intent(this, AudioService.class);
 //        startIntent.setAction(AudioService.DECREASE_VOLUME);
@@ -138,19 +160,12 @@ public class AlarmQuestActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        picker.onPause();
     }
 
     @Override
     public void updateLeftToAnswerQuestionsCounter(String n) {
         leftToSolveQuestion.setText(n);
         leftToSolveQuestion.startAnimation(scaleAnimation);
-    }
-
-    @Override
-    public void setBubbleTitles(String[] titles) {
-        setAdapter(titles);
-        picker.invalidate();
     }
 
     @Override
@@ -167,12 +182,12 @@ public class AlarmQuestActivity extends AppCompatActivity
     }
 
     @Override
-    public void showHasAnsweredMessage() {
-        Toast.makeText(this, getString(R.string.error_question), Toast.LENGTH_SHORT).show();
+    public void solvedQuestion(boolean isCorrect) {
+        presenter.isAnswerCorrect(isCorrect);
     }
 
     @Override
-    public void solvedQuest(boolean isCorrect) {
-        presenter.isAnswerCorrect(isCorrect);
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentInjector;
     }
 }

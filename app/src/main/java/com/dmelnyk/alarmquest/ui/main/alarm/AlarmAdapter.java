@@ -1,14 +1,17 @@
 package com.dmelnyk.alarmquest.ui.main.alarm;
 
-import android.support.constraint.ConstraintLayout;
+import android.databinding.DataBindingUtil;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.dmelnyk.alarmquest.R;
-import com.kyleduo.switchbutton.SwitchButton;
+import com.dmelnyk.alarmquest.databinding.AlarmItemBindBinding;
+import com.dmelnyk.alarmquest.model.Alarm;
+import com.dmelnyk.alarmquest.ui.main.alarm.viewmodel.AlarmListViewModel;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -16,85 +19,80 @@ import java.util.List;
  * Created by d264 on 12/19/17.
  */
 
-public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ItemViewHolder> {
+public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
 
+    @Nullable
+    private final AlarmListViewModel mPresenter;
 
-    private final List<String> mDataSet;
-    private OnAlarmChangeListener mCallbackListener;
+    List<? extends Alarm> mAlarmList;
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
-        public ConstraintLayout mItemLayout;
-        public TextView mTextViewTime;
-        public TextView mTextViewDays;
-        public SwitchButton mSwitcher;
+    public AlarmAdapter(@Nullable AlarmListViewModel clickCallback) {
+        mPresenter = clickCallback;
+    }
 
-        public ItemViewHolder(View itemView) {
-            super(itemView);
-            mItemLayout = (ConstraintLayout) itemView.findViewById(R.id.alarm_item_layout);
-            mTextViewTime = (TextView) itemView.findViewById(R.id.item_tv_alarm_time);
-            mTextViewDays = (TextView) itemView.findViewById(R.id.item_tv_alarm_days);
-            mSwitcher = (SwitchButton) itemView.findViewById(R.id.item_switch_button);
+    public void setAlarmList(final List<? extends Alarm> alarmList) {
+        if (mAlarmList == null) {
+            mAlarmList = alarmList;
+            notifyItemRangeInserted(0, alarmList.size());
+        } else {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return mAlarmList.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return alarmList.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return mAlarmList.get(oldItemPosition).getId()
+                            .equals(alarmList.get(newItemPosition).getId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    Alarm newAlarm = alarmList.get(newItemPosition);
+                    Alarm oldAlarm = mAlarmList.get(oldItemPosition);
+                    return newAlarm.equals(oldAlarm);
+                }
+            });
+
+            mAlarmList = alarmList;
+            result.dispatchUpdatesTo(this);
         }
     }
 
-    public AlarmAdapter(List<String> dataSet) {
-        mDataSet = dataSet;
-    }
-
-    public void setAlarmChangeListener(OnAlarmChangeListener listener) {
-        this.mCallbackListener = listener;
-    }
-
-    public interface OnAlarmChangeListener {
-        void editedAlarm(String alarm);
-        void removedAlarm(String time);
-        void onEditDays(String days);
+    @Override
+    public AlarmViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        AlarmItemBindBinding binding = DataBindingUtil
+                .inflate(LayoutInflater.from(parent.getContext()),
+                        R.layout.alarm_item_bind, parent, false);
+        binding.setViewModel(mPresenter);
+        return new AlarmViewHolder(binding);
     }
 
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.alarm_item, parent, false);
-
-        return new ItemViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.mSwitcher.setChecked(true);
-        holder.mTextViewTime.setText(mDataSet.get(position));
-//        holder.mTextViewDays.setText();
-
-
-        holder.mItemLayout.setOnLongClickListener(view -> {
-            if (isCallbackListenerImplemented()) {
-                mCallbackListener.removedAlarm(mDataSet.get(position));
-            }
-
-            return true;
-        });
-
-        holder.mTextViewTime.setOnClickListener(view -> {
-            if (isCallbackListenerImplemented()) {
-                mCallbackListener.editedAlarm(mDataSet.get(position));
-            }
-        });
-
-        holder.mTextViewDays.setOnClickListener(view -> {
-            if (isCallbackListenerImplemented()) {
-                mCallbackListener.onEditDays(holder.mTextViewDays.getText().toString());
-            }
-        });
-    }
-
-    private boolean isCallbackListenerImplemented() {
-        if (mCallbackListener == null) {
-            throw new ClassCastException(AlarmAdapter.OnAlarmChangeListener.class + " not implemented");
-        } else return true;
+    public void onBindViewHolder(AlarmViewHolder holder, int position) {
+        holder.binding.setAlarm(mAlarmList.get(position));
+        holder.binding.executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-        return mDataSet.size();
+        return mAlarmList == null ? 0 : mAlarmList.size();
     }
+
+    public class AlarmViewHolder extends RecyclerView.ViewHolder {
+
+        final AlarmItemBindBinding binding;
+
+        public AlarmViewHolder(AlarmItemBindBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
+
 }

@@ -59,7 +59,7 @@ public class DataRepository {
     }
 
     /**
-     * Updates alarm with days in number look ("0 1 6")
+     * Updates alarm with days in number format ("0 1 6")
      * @param alarm
      */
      public void updateAlarm(final Alarm alarm) {
@@ -75,5 +75,9 @@ public class DataRepository {
     public void addAlarm(Alarm alarm) {
         Runnable task = () -> mDatabase.alarmDao().add((AlarmEntity) alarm);
         new Thread(task).start();
+    }
+
+    public void getAlarm(String id) {
+        mDatabase.alarmDao().loadAlarmSync(id);
     }
 }

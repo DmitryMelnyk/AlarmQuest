@@ -6,8 +6,8 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
 import com.dmelnyk.alarmquest.data.DataUtil;
-import com.dmelnyk.alarmquest.data.question.IQuestionRepository;
-import com.dmelnyk.alarmquest.data.question.QuestionRepository;
+import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionRepository;
+import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionRepositoryImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,13 +21,13 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class QuestInteractorTest {
 
-    IQuestInteractor interactor;
+    QuestInteractor interactor;
 
     @Before
     public void setUp() {
         Context context = InstrumentationRegistry.getContext();
-        IQuestionRepository repository = new QuestionRepository(new DataUtil(context));
-        interactor = new QuestInteractor(repository);
+        QuestionRepository repository = new QuestionRepositoryImpl(new DataUtil(context));
+        interactor = new QuestInteractorImpl(repository);
     }
 
     @Test
