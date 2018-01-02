@@ -19,7 +19,7 @@
 
     <color name="textSelected">#673ab7</color>
 
-    <color name="textColor">#424242</color>
+    <color name="text_color">#424242</color>
     <color name="transparent">#80ffffff</color>
     <color name="darkBlack">#000000</color>
 </resources>

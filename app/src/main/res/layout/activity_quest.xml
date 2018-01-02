@@ -22,7 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.dmelnyk.alarmquest.ui.alarm.questfragment.QuestFragment">
+        android:name="com.dmelnyk.alarmquest.ui.questfragment.QuestFragment">
 
     </fragment>
 

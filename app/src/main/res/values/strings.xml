@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Alarm Quest</string>
-    <string name="error_question">Вы уже отвечали на этот вопрос. Выберите другой!</string>
     <string name="success_message">Поздравляю! Вы справились с заданием!</string>
-    <string name="choose_question">Количество вопросов на которые необходимо верно ответить: </string>
+    <string name="choose_question">Ответьте на  вопроса</string>
     <string name="alarm_clock_off">Будильник выключен!</string>
     <string name="nav_set_alarm">Будильник</string>
     <string name="nav_nearest_alarm">Ближайший будильник</string>
     <string name="navigation_fragment_hours">Часов</string>
     <string name="nearest_alarm_null">не запланировано</string>
     <string name="days_choose">Choose</string>
+    <string name="days_cancel">Choose</string>
+    <string name="dialog_ok">ok</string>
+    <string name="dialog_go">Приступить</string>
+    <string name="dialog_quest">Ответьте правильно на %d вопроса</string>
 </resources>

@@ -81,7 +81,6 @@ public class AlarmEntity implements Alarm {
     }
 
     public AlarmEntity(Alarm alarm) {
-//        this.db_id = alarm.getDbId();
         this.id = alarm.getId();
         this.time = alarm.getTime();
         this.days = alarm.getDays();
@@ -117,6 +116,15 @@ public class AlarmEntity implements Alarm {
         time = in.readString();
         days = in.readString();
         isEnable = in.readInt() == 1 ? true : false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Alarm alarm = (Alarm) obj;
+        return getId().equals(alarm.getId())
+                && isEnable() == isEnable()
+                && getDays().equals(alarm.getDays())
+                && getTime().equals(alarm.getTime());
     }
 
     @Override

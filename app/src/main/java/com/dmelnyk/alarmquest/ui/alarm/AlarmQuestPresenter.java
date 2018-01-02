@@ -1,9 +1,13 @@
 package com.dmelnyk.alarmquest.ui.alarm;
 
-import com.dmelnyk.alarmquest.business.alarm.IQuestInteractor;
+import com.dmelnyk.alarmquest.business.alarm.QuestInteractor;
 import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import timber.log.Timber;
 
@@ -13,18 +17,17 @@ import timber.log.Timber;
 
 public class AlarmQuestPresenter implements Contract.IAlarmQuestPresenter {
 
-    private final IQuestInteractor questInteractor;
+    private final QuestInteractor questInteractor;
     private Contract.IAlarmQuestView view;
-    private final int questionsCount = 15; // default question's count
+    private final int questionsCount = 100; // default question's count
     private int questionsToSolveCounters = 1;
-    private QuestionData[] quesions;
+    private QuestionData[] mQuestions;
 
-    // Database of questions already answered
-    private ArrayList<String> answeredQuestions = new ArrayList<>();
-    private String askedQuestionTitle = "";
     private String[] titles;
+    private int mQuestionNumber;
 
-    public AlarmQuestPresenter(IQuestInteractor questInteractor) {
+    @Inject
+    public AlarmQuestPresenter(QuestInteractor questInteractor) {
         this.questInteractor = questInteractor;
     }
 
@@ -38,11 +41,15 @@ public class AlarmQuestPresenter implements Contract.IAlarmQuestPresenter {
     }
 
     private void loadQuestions(Contract.IAlarmQuestView view) {
-        quesions = questInteractor.getQuestions(questionsCount);
-        titles = getTitles(quesions);
-        askedQuestionTitle = quesions[0].getQuestion();
-        view.setBubbleTitles(titles);
-        view.setQuestion(quesions[0]);
+        // todo
+        mQuestions = questInteractor.getQuestions(questionsCount);
+        titles = getTitles(mQuestions);
+        List<String> list = new ArrayList(Arrays.asList(titles));
+
+        view.setQuestions(list, mQuestions);
+        // set first question
+        mQuestionNumber = 0;
+        view.setQuestion(mQuestions[0]);
     }
 
     private String[] getTitles(QuestionData[] questions) {
@@ -55,8 +62,8 @@ public class AlarmQuestPresenter implements Contract.IAlarmQuestPresenter {
     }
 
     @Override
-    public void refreshQuestions() {
-        loadQuestions(view);
+    public void questionSwiped() {
+        view.setQuestion(mQuestions[++mQuestionNumber]);
     }
 
     @Override
@@ -65,43 +72,19 @@ public class AlarmQuestPresenter implements Contract.IAlarmQuestPresenter {
     }
 
     @Override
-    public void pickQuestion(String questionTitle) {
-        if (!answeredQuestions.contains(questionTitle)) {
-            QuestionData newQuestion = getQuestionWithTitle(questionTitle);
-            askedQuestionTitle = newQuestion.getQuestion();
-            view.setQuestion(newQuestion);
-        } else {
-            view.showHasAnsweredMessage();
-        }
-    }
-
-    private QuestionData getQuestionWithTitle(String questionTitle) {
-        for (int i = 0; i < questionsCount; i++) {
-            if (questionTitle.equals(quesions[i].getQuestion())) {
-                return quesions[i];
-            }
-        }
-        return null;
-    }
-
-    @Override
     public void isAnswerCorrect(boolean isCorrect) {
-        // add question to database of answered questions
-        answeredQuestions.add(askedQuestionTitle);
-        Timber.d(answeredQuestions.toString());
+        // add question to database of answered mQuestions
         if (isCorrect) {
-            questionsToSolveCounters--;
-            view.updateLeftToAnswerQuestionsCounter("" + questionsToSolveCounters);
+            view.updateLeftToAnswerQuestionsCounter("" + --questionsToSolveCounters);
         }
 
         if (questionsToSolveCounters == 0) {
             view.success();
         }
 
-        // After answering to all questions - stop alarm
-        if (answeredQuestions.size() == questionsCount) {
-            // TODO: stop alarm
+        // After answering to all mQuestions - stop alarm
+        if (mQuestionNumber == questionsCount-1) {
+            view.success();
         }
-
     }
 }

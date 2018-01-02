@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.dmelnyk.alarmquest.R;
+import com.dmelnyk.alarmquest.alarmmanager.AlarmJobCreator;
 import com.dmelnyk.alarmquest.data.DataRepository;
 import com.dmelnyk.alarmquest.db.AppDatabase;
 import com.dmelnyk.alarmquest.db.AppExecutors;
+import com.evernote.android.job.JobManager;
 import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
@@ -63,6 +65,8 @@ public class App extends Application implements HasActivityInjector {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        JobManager.create(this).addJobCreator(new AlarmJobCreator());
     }
 
     private AppDatabase getDatabase() {

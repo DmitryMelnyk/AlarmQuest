@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/text_linear_layout"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:gravity="center"
+                android:text="@string/choose_question"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/left_to_solve_questions"
+                android:text="2"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="300dp"-->
+            <!--android:layout_below="@id/text_linear_layout"-->
+            <!--android:layout_above="@id/questFragment"-->
+            <!--&gt;-->
+            <!---->
+        <!--</ScrollView>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_linear_layout"
+            android:layout_above="@id/questFragment"
+            />
+
+        <fragment
+            android:id="@+id/questFragment"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.dmelnyk.alarmquest.ui.questfragment.QuestFragment">
+        </fragment>
+
+    </RelativeLayout>
+

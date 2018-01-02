@@ -7,18 +7,17 @@
             name="alarm"
             type="com.dmelnyk.alarmquest.model.Alarm" />
         <variable
-            name="presenter"
-            type="com.dmelnyk.alarmquest.ui.main.stopwatch.presenter.AlarmListPresenter" />
+            name="viewModel"
+            type="com.dmelnyk.alarmquest.ui.main.alarm.viewmodel.AlarmListViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/alarm_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onLongClick="@{(view) -> presenter.onRemoveAlarmClicked(alarm)}">
+        android:onLongClick="@{(view) -> viewModel.onRemoveAlarmClicked(alarm)}">
 
         <LinearLayout
             android:id="@+id/ll_time_and_days"
@@ -34,25 +33,22 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/item_tv_alarm_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> presenter.onEditAlarmClicked(alarm)}"
+                android:onClick="@{() -> viewModel.onEditAlarmClicked(alarm)}"
                 android:text="@{alarm.time}"
                 android:textColor="@color/colorAccent2"
                 android:textSize="46dp" />
 
             <TextView
-                android:id="@+id/item_tv_alarm_days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> presenter.onEditDayClicked(alarm)}"
+                android:onClick="@{() -> viewModel.onEditDayClicked(alarm)}"
                 android:textColor="@color/colorAccent2"
                 android:textSize="18dp"
                 app:daysText="@{alarm.days}"
                 />
         </LinearLayout>
-
 
         <com.kyleduo.switchbutton.SwitchButton
             android:layout_width="wrap_content"
@@ -60,7 +56,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:checked="@{alarm.enable}"
-            android:onClick="@{() -> presenter.onCheckedChanged(alarm)}"
+            android:onClick="@{() -> viewModel.onCheckedChanged(alarm)}"
             android:elevation="8dp"
             app:kswBackDrawable="@drawable/switch_bg"
             app:kswThumbColor="@color/colorPrimaryDark"
@@ -72,7 +68,6 @@
             app:layout_constraintVertical_bias="0.514" />
 
         <View
-            android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginBottom="8dp"

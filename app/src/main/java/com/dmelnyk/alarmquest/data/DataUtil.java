@@ -1,8 +1,9 @@
 package com.dmelnyk.alarmquest.data;
 
+import android.app.Application;
 import android.content.Context;
 
-import com.dmelnyk.alarmquest.data.question.QuestionBlock;
+import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionBlock;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.inject.Inject;
 
 /**
  * Created by dmitry on 23.05.17.
@@ -19,7 +22,8 @@ public class DataUtil {
 
     private QuestionBlock[] questions;
 
-    public DataUtil(Context context) {
+    @Inject
+    public DataUtil(Application context) {
         String jsonQuestions = getJsonQuestions(context);
         questions = getQuestions(jsonQuestions);
     }

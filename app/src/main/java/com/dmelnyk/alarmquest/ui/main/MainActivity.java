@@ -5,10 +5,8 @@ import android.support.design.widget.BottomNavigationView;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.ui.common.BaseActivity;
-import com.dmelnyk.alarmquest.ui.main.alarm.view.AlarmFragment;
-import com.dmelnyk.alarmquest.ui.main.stopwatch.view.AlarmListFragment;
-
-import javax.inject.Inject;
+import com.dmelnyk.alarmquest.ui.main.demo.view.DemoQuestFragment;
+import com.dmelnyk.alarmquest.ui.main.alarm.view.AlarmListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +45,7 @@ public class MainActivity extends BaseActivity {
 
             switch (menu.getItemId()) {
                 case R.id.action_stop_watch:
-                    addFragment(R.id.main_fragment_container, new AlarmFragment());
+                    addFragment(R.id.main_fragment_container, new DemoQuestFragment());
                     break;
                 case R.id.action_alarm:
                     addFragment(R.id.main_fragment_container, new AlarmListFragment());

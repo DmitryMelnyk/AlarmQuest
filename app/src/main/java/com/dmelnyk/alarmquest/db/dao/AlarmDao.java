@@ -29,7 +29,7 @@ public interface AlarmDao {
     LiveData<AlarmEntity> loadAlarm(int alarmId);
 
     @Query("SELECT * from alarms WHERE id = :alarmId")
-    AlarmEntity loadAlarmSync(int alarmId);
+    AlarmEntity loadAlarmSync(String alarmId);
 
     @Delete
     void delete(AlarmEntity alarm);

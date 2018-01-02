@@ -25,7 +25,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 public class AudioService extends Service {
-    static final int NOTIFICATION_ID = 543;
+    static final int NOTIFICATION_ID = 8541; // magic number
     public static final String PLAY = "play";
     public static final String STOP = "stop";
     public static final String DECREASE_VOLUME = "decrease volume";
@@ -76,7 +76,10 @@ public class AudioService extends Service {
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        // open quest activity
+        startActivity(notificationIntent);
+
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle(getResources().getString(R.string.app_name))
