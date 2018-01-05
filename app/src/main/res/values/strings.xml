@@ -8,7 +8,7 @@
     <string name="navigation_fragment_hours">Часов</string>
     <string name="nearest_alarm_null">не запланировано</string>
     <string name="days_choose">Choose</string>
-    <string name="days_cancel">Choose</string>
+    <string name="days_cancel">Cancel</string>
     <string name="dialog_ok">ok</string>
     <string name="dialog_go">Приступить</string>
     <string name="dialog_quest">Ответьте правильно на %d вопроса</string>

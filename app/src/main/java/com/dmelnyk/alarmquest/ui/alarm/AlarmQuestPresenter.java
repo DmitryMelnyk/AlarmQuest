@@ -1,15 +1,13 @@
 package com.dmelnyk.alarmquest.ui.alarm;
 
-import com.dmelnyk.alarmquest.business.alarm.QuestInteractor;
-import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
+import com.dmelnyk.alarmquest.ui.alarm.business.QuestInteractor;
+import com.dmelnyk.alarmquest.model.QuestionData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 /**
  * Created by d264 on 6/7/17.

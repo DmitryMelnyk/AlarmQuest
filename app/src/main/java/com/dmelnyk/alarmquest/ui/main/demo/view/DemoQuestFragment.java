@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.ui.questfragment.QuestFragment;
 import com.dmelnyk.alarmquest.ui.common.view.BaseFragment;
 import com.dmelnyk.alarmquest.ui.main.demo.viewmodel.DemoQuestViewModel;
+import com.dmelnyk.alarmquest.ui.questfragment.QuestFragment;
 import com.dmelnyk.alarmquest.ui.questfragment.QuestionAdapter;
 import com.dmelnyk.alarmquest.utils.MyBounceInterpolator;
 
@@ -38,8 +38,6 @@ import me.yuqirong.cardswipelayout.OnSwipeListener;
 
 public class DemoQuestFragment extends BaseFragment
     implements QuestFragment.SolvedQuestCallbackListener {
-
-    private int SOLVE_QUESTIONS = 2; // default
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -145,15 +143,17 @@ public class DemoQuestFragment extends BaseFragment
 
 
     private void showStartingDialog() {
-        String body = String.format(getString(R.string.dialog_quest), SOLVE_QUESTIONS);
-        new MaterialDialog.Builder(getContext())
+        String body = String.format(getString(R.string.dialog_quest),
+                DemoQuestViewModel.questionsToSolveCounters);
+        MaterialDialog alert = new MaterialDialog.Builder(getContext())
                 .title(R.string.app_name)
                 .content(body)
                 .positiveText(R.string.dialog_go)
                 .backgroundColorRes(R.color.black)
                 .titleColorRes(R.color.white)
                 .contentColorRes(R.color.white)
-                .show();
+                .build();
+        alert.show();
     }
 
     private void showSuccessAlertDialog() {

@@ -1,6 +1,6 @@
 package com.dmelnyk.alarmquest.ui.questfragment;
 
-import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
+import com.dmelnyk.alarmquest.model.QuestionData;
 
 import javax.inject.Inject;
 

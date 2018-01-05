@@ -1,7 +1,9 @@
 package com.dmelnyk.alarmquest.ui.alarm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +17,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
+import com.dmelnyk.alarmquest.model.QuestionData;
 import com.dmelnyk.alarmquest.ui.questfragment.QuestFragment;
 import com.dmelnyk.alarmquest.ui.questfragment.QuestionAdapter;
 import com.dmelnyk.alarmquest.utils.AudioService;
@@ -60,11 +62,20 @@ public class AlarmQuestActivity extends AppCompatActivity
         AndroidInjection.inject(this);
         setContentView(R.layout.activity_alarm_quest);
 
+        wakeScreen();
         // Default number of questions to solve is 2
         mQuestionToSolveCount = getIntent().getIntExtra(EXTRA_QUESTION_COUNT, 2);
 
         initializeViews();
         presenter.bindView(this, mQuestionToSolveCount);
+    }
+
+    private void wakeScreen() {
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+
+        PowerManager.WakeLock screenWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "ScreenLock tag from AlarmListener");
+
+        screenWakeLock.acquire();
     }
 
     @Override

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="time_to_alarm_minutes">Будильник зазвенит через %d мин.</string>
+    <string name="time_to_alarm_hours_minutes">Будильник зазвенит через %d час. и %d мин.</string>
+</resources>

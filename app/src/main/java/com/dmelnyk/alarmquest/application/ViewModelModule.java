@@ -1,7 +1,7 @@
 package com.dmelnyk.alarmquest.application;
 
 import com.dmelnyk.alarmquest.ui.main.demo.viewmodel.DemoQuestViewModelModule;
-import com.dmelnyk.alarmquest.ui.main.alarm.viewmodel.AlarmListViewModelModule;
+import com.dmelnyk.alarmquest.ui.main.alarm_list.viewmodel.AlarmListViewModelModule;
 
 import dagger.Module;
 

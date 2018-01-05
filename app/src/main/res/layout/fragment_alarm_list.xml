@@ -10,7 +10,7 @@
             type="boolean" />
         <variable
             name="viewModel"
-            type="com.dmelnyk.alarmquest.ui.main.alarm.viewmodel.AlarmListViewModel"/>
+            type="com.dmelnyk.alarmquest.ui.main.alarm_list.viewmodel.AlarmListViewModel"/>
         <import type="android.view.View"/>
     </data>
 

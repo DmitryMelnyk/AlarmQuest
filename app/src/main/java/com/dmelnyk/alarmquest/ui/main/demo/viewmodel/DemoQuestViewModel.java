@@ -5,8 +5,8 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
-import com.dmelnyk.alarmquest.business.alarm.QuestInteractor;
-import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
+import com.dmelnyk.alarmquest.ui.alarm.business.QuestInteractor;
+import com.dmelnyk.alarmquest.model.QuestionData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import timber.log.Timber;
 public class DemoQuestViewModel extends ViewModel {
 
     private final int questionsCount = 100; // default question's count
-    private int questionsToSolveCounters = 3; // todo: get from settings
+    public static int questionsToSolveCounters = 3; // todo: get from settings
     private QuestionData[] mQuestionsData;
 
     // Database of mQuestions already answered

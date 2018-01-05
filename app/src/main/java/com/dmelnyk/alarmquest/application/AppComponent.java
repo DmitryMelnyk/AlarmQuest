@@ -1,12 +1,10 @@
 package com.dmelnyk.alarmquest.application;
 
-import android.app.Application;
+import com.dmelnyk.alarmquest.db.DbModule;
 
 import javax.inject.Singleton;
 
-import dagger.BindsInstance;
 import dagger.Component;
-import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 
@@ -21,6 +19,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AppModule.class,
         ActivityBindingModule.class,
         AndroidSupportInjectionModule.class,
+        DbModule.class,
         ViewModelModule.class
 })
 public interface AppComponent extends AndroidInjector<App> {

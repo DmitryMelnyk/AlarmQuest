@@ -2,7 +2,6 @@ package com.dmelnyk.alarmquest.db.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -27,6 +26,7 @@ public class AlarmEntity implements Alarm {
     @ColumnInfo(name = "time")
     private String time;
 
+    @NonNull
     @ColumnInfo(name = "days")
     private String days;
 
@@ -71,6 +71,7 @@ public class AlarmEntity implements Alarm {
 
     public AlarmEntity() {
         this.id = UUID.randomUUID().toString();
+        this.days = "";
     }
 
     public AlarmEntity(String id, String time, String days, boolean isEnable) {

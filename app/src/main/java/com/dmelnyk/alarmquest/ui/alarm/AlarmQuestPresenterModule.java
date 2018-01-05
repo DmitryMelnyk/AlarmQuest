@@ -1,7 +1,7 @@
 package com.dmelnyk.alarmquest.ui.alarm;
 
-import com.dmelnyk.alarmquest.business.alarm.QuestInteractor;
-import com.dmelnyk.alarmquest.business.alarm.QuestInteractorImpl;
+import com.dmelnyk.alarmquest.ui.alarm.business.QuestInteractor;
+import com.dmelnyk.alarmquest.ui.alarm.business.QuestInteractorImpl;
 import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionRepository;
 import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionRepositoryImpl;
 import com.dmelnyk.alarmquest.inject.PerActivity;

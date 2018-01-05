@@ -8,7 +8,7 @@
             type="com.dmelnyk.alarmquest.model.Alarm" />
         <variable
             name="viewModel"
-            type="com.dmelnyk.alarmquest.ui.main.alarm.viewmodel.AlarmListViewModel" />
+            type="com.dmelnyk.alarmquest.ui.main.alarm_list.viewmodel.AlarmListViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -46,7 +46,7 @@
                 android:onClick="@{() -> viewModel.onEditDayClicked(alarm)}"
                 android:textColor="@color/colorAccent2"
                 android:textSize="18dp"
-                app:daysText="@{alarm.days}"
+                app:daysText="@{alarm}"
                 />
         </LinearLayout>
 

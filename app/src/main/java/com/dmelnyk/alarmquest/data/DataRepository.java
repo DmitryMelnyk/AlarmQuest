@@ -77,7 +77,7 @@ public class DataRepository {
         new Thread(task).start();
     }
 
-    public void getAlarm(String id) {
-        mDatabase.alarmDao().loadAlarmSync(id);
+    public Alarm getAlarm(String id) {
+        return mDatabase.alarmDao().loadAlarmSync(id);
     }
 }

@@ -17,6 +17,7 @@ public class AlarmJobCreator implements JobCreator {
 
     public static final String DefaultTaskTag = "DefaultTaskTag";
     public static final String tag = "AlarmJobCreator";
+    private static final long DAY_LONG = 86400000;
 
     @Nullable
     @Override
@@ -25,9 +26,10 @@ public class AlarmJobCreator implements JobCreator {
     }
 
     public static int scheduleAlarmAtTime(long atTime, String tag) {
+        if (atTime == 0) atTime = DAY_LONG;
         int jobId = new JobRequest.Builder(tag)
                 .setExact(atTime)
-                .setUpdateCurrent(false)
+                .setUpdateCurrent(true)
                 .build()
                 .schedule();
 
@@ -37,5 +39,9 @@ public class AlarmJobCreator implements JobCreator {
 
     public static void cancelJob(int id) {
         JobManager.instance().cancel(id);
+    }
+
+    public static void cancelJob(String tag) {
+        JobManager.instance().cancelAllForTag(tag);
     }
 }

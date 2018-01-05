@@ -9,8 +9,8 @@ import com.dmelnyk.alarmquest.ui.common.BaseActivityModule;
 import com.dmelnyk.alarmquest.ui.common.view.BaseFragmentModule;
 import com.dmelnyk.alarmquest.ui.main.demo.view.DemoQuestFragment;
 import com.dmelnyk.alarmquest.ui.main.demo.view.DemoQuestFragmentModule;
-import com.dmelnyk.alarmquest.ui.main.alarm.view.AlarmListFragment;
-import com.dmelnyk.alarmquest.ui.main.alarm.view.AlarmListFragmentModule;
+import com.dmelnyk.alarmquest.ui.main.alarm_list.view.AlarmListFragment;
+import com.dmelnyk.alarmquest.ui.main.alarm_list.view.AlarmListFragmentModule;
 
 import dagger.Binds;
 import dagger.Module;

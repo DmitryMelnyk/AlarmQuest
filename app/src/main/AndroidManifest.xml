@@ -9,6 +9,10 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
+    // for wake screen
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+
     <application
         android:name=".application.App"
         android:allowBackup="false"
