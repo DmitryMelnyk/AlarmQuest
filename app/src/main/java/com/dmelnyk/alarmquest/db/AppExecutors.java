@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
 /**
  * Created by d264 on 12/21/17.
  */
@@ -30,6 +32,7 @@ public class AppExecutors {
         this.mMainThread = mainThread;
     }
 
+    @Inject
     public AppExecutors() {
         this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3),
                 new MainThreadExecutor());

@@ -1,6 +1,7 @@
 package com.dmelnyk.alarmquest.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dmelnyk.alarmquest.inject.PerActivity;
@@ -14,6 +15,7 @@ import javax.inject.Singleton;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.android.ContributesAndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 
@@ -26,4 +28,7 @@ abstract class AppModule {
 
     @Binds
     abstract Application application(App app);
+
+    @Binds
+    abstract Context providesContext(App app);
 }

@@ -2,7 +2,7 @@ package com.dmelnyk.alarmquest.ui.questfragment;
 
 import android.support.annotation.NonNull;
 
-import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
+import com.dmelnyk.alarmquest.model.QuestionData;
 
 /**
  * Created by dmitry on 23.05.17.

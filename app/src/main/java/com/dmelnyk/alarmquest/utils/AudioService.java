@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.view.WindowManager;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.ui.alarm.AlarmQuestActivity;

@@ -6,7 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.ui.common.BaseActivity;
 import com.dmelnyk.alarmquest.ui.main.demo.view.DemoQuestFragment;
-import com.dmelnyk.alarmquest.ui.main.alarm.view.AlarmListFragment;
+import com.dmelnyk.alarmquest.ui.main.alarm_list.view.AlarmListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

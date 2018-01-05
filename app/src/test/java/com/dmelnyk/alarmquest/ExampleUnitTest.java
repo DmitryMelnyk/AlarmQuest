@@ -1,11 +1,10 @@
 package com.dmelnyk.alarmquest;
 
-import android.content.Context;
 import android.test.AndroidTestCase;
 
-import com.dmelnyk.alarmquest.business.alarm.QuestInteractor;
-import com.dmelnyk.alarmquest.business.alarm.QuestInteractorImpl;
-import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
+import com.dmelnyk.alarmquest.ui.alarm.business.QuestInteractor;
+import com.dmelnyk.alarmquest.ui.alarm.business.QuestInteractorImpl;
+import com.dmelnyk.alarmquest.model.QuestionData;
 import com.dmelnyk.alarmquest.data.DataUtil;
 import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionRepository;
 import com.dmelnyk.alarmquest.ui.questfragment.repository.QuestionRepositoryImpl;
@@ -14,8 +13,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import javax.inject.Inject;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -27,11 +27,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class ExampleUnitTest extends AndroidTestCase {
     QuestInteractor interactor;
 
-    @Mock Context context;
+    @Inject
+    DataUtil dataUtil;
 
     @Before
     public void setUp() {
-        QuestionRepository repository = new QuestionRepositoryImpl(new DataUtil(context));
+        QuestionRepository repository = new QuestionRepositoryImpl(dataUtil);
         interactor = new QuestInteractorImpl(repository);
     }
 

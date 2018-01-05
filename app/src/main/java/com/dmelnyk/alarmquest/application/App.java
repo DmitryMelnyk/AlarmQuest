@@ -2,6 +2,7 @@ package com.dmelnyk.alarmquest.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.alarmmanager.AlarmJobCreator;
@@ -28,11 +29,18 @@ public class App extends Application implements HasActivityInjector {
     @Inject
     DispatchingAndroidInjector<Activity> activityInjector;
 
+    @Inject
+    AppDatabase database;
+
     private AppExecutors mAppExecutors;
 
     @Override
     public AndroidInjector<Activity> activityInjector() {
         return activityInjector;
+    }
+
+    public static App get(Context context) {
+        return (App) context.getApplicationContext();
     }
 
     @Override

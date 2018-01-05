@@ -30,7 +30,7 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseFragment extends Fragment
         implements HasSupportFragmentInjector {
 
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
 //    @Inject
 //    protected Context activityContext;
 
@@ -48,6 +48,15 @@ public abstract class BaseFragment extends Fragment
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
+        compositeDisposable = new CompositeDisposable();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (compositeDisposable.isDisposed()) {
+            compositeDisposable = new CompositeDisposable();
+        }
     }
 
     @Override

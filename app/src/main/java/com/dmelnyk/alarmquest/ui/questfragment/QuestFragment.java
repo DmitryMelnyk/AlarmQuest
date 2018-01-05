@@ -12,10 +12,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.dmelnyk.alarmquest.R;
-import com.dmelnyk.alarmquest.business.alarm.model.QuestionData;
+import com.dmelnyk.alarmquest.model.QuestionData;
 
 import com.dmelnyk.alarmquest.utils.*;
 import javax.inject.Inject;
