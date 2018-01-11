@@ -6,17 +6,18 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.view.WindowManager;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.ui.alarm.AlarmQuestActivity;
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.LoopingMediaSource;
@@ -24,6 +25,8 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+
+import static com.google.android.exoplayer2.C.USAGE_ALARM;
 
 public class AudioService extends Service {
     static final int NOTIFICATION_ID = 8541; // magic number
@@ -82,7 +85,7 @@ public class AudioService extends Service {
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
-        Notification notification = new NotificationCompat.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this, "default")
                 .setContentTitle(getResources().getString(R.string.app_name))
                 .setTicker(getResources().getString(R.string.app_name))
                 .setContentText(getResources().getString(R.string.app_name))
@@ -99,22 +102,25 @@ public class AudioService extends Service {
     }
 
     private void playAudio() {
-        Uri mediaUri = Uri.parse("asset:///sms.mp3");
+        Uri alertUri = RingtoneManager.getActualDefaultRingtoneUri(getApplicationContext(), RingtoneManager.TYPE_ALARM);
+        if (alertUri == null) alertUri = RingtoneManager.getActualDefaultRingtoneUri(getApplicationContext(), RingtoneManager.TYPE_RINGTONE);
 
         player = ExoPlayerFactory.newSimpleInstance(
-                getApplicationContext(),
+                new DefaultRenderersFactory(getApplicationContext()),
                 new DefaultTrackSelector(),
                 new DefaultLoadControl()
         );
 
-        String userAgent = Util.getUserAgent(this, "ClassicalMusicQuiz");
-        MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
+        String userAgent = Util.getUserAgent(this, getString(R.string.app_name));
+        MediaSource mediaSource = new ExtractorMediaSource(alertUri, new DefaultDataSourceFactory(
                 this, userAgent), new DefaultExtractorsFactory(), null, null);
 
         LoopingMediaSource loopingMediaSource = new LoopingMediaSource(mediaSource, 100);
-        player.setAudioStreamType(AudioManager.STREAM_ALARM);
+        AudioAttributes attr = new AudioAttributes.Builder()
+                .setUsage(USAGE_ALARM)
+                .build();
+        player.setAudioAttributes(attr);
         player.prepare(loopingMediaSource);
-        player.setVolume(0.5f);
         player.setPlayWhenReady(true);
     }
 

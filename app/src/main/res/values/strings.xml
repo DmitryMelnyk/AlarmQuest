@@ -12,4 +12,11 @@
     <string name="dialog_ok">ok</string>
     <string name="dialog_go">Приступить</string>
     <string name="dialog_quest">Ответьте правильно на %d вопроса</string>
+
+
+    <string name="settings_minutes">%d мин.</string>
+    <string name="settings_volume">Громкость</string>
+    <string name="settings_song">Мелодия</string>
+    <string name="settings_reduce_sound">Уменьшать громкость после начала квеста</string>
+    <string name="choose_volume">Выберите уровень громкости</string>
 </resources>

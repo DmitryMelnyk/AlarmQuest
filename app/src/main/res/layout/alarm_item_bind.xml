@@ -57,7 +57,6 @@
             android:layout_marginRight="24dp"
             android:checked="@{alarm.enable}"
             android:onClick="@{() -> viewModel.onCheckedChanged(alarm)}"
-            android:elevation="8dp"
             app:kswBackDrawable="@drawable/switch_bg"
             app:kswThumbColor="@color/colorPrimaryDark"
             app:kswThumbHeight="40dp"

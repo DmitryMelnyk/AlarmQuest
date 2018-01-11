@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/action_stop_watch"
-        android:title="@string/menu_stop_watch"
+        android:title="@string/menu_demo_quest"
         android:enabled="true"
-        android:icon="@drawable/ic_action_timer"
+        android:icon="@drawable/ic_demo_quest"
         app:showAsAction="ifRoom"
         />
 

@@ -1,12 +1,15 @@
 package com.dmelnyk.alarmquest.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.util.Log;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.ui.common.BaseActivity;
 import com.dmelnyk.alarmquest.ui.main.demo.view.DemoQuestFragment;
 import com.dmelnyk.alarmquest.ui.main.alarm_list.view.AlarmListFragment;
+import com.dmelnyk.alarmquest.ui.main.settings.view.SettingsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +31,8 @@ public class MainActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // set central fragment
-            addFragment(R.id.main_fragment_container, new AlarmListFragment());
-            mBottomNavigator.setSelectedItemId(R.id.action_alarm);
+            addFragment(R.id.main_fragment_container, new SettingsFragment());
+//            mBottomNavigator.setSelectedItemId(R.id.action_alarm);
         }
     }
 
@@ -51,6 +54,7 @@ public class MainActivity extends BaseActivity {
                     addFragment(R.id.main_fragment_container, new AlarmListFragment());
                     break;
                 case R.id.action_settings:
+                    addFragment(R.id.main_fragment_container, new SettingsFragment());
                     break;
             }
             return true;

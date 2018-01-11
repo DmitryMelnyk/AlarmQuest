@@ -2,6 +2,7 @@ package com.dmelnyk.alarmquest.application;
 
 import com.dmelnyk.alarmquest.ui.main.demo.viewmodel.DemoQuestViewModelModule;
 import com.dmelnyk.alarmquest.ui.main.alarm_list.viewmodel.AlarmListViewModelModule;
+import com.dmelnyk.alarmquest.ui.main.settings.viewmodel.SettingsViewModelModule;
 
 import dagger.Module;
 
@@ -11,7 +12,8 @@ import dagger.Module;
 
 @Module(includes = {
         AlarmListViewModelModule.class,
-        DemoQuestViewModelModule.class
+        DemoQuestViewModelModule.class,
+        SettingsViewModelModule.class
 })
 public class ViewModelModule {
 }

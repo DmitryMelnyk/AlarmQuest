@@ -106,7 +106,7 @@ public class AlarmQuestActivity extends AppCompatActivity
             @Override
             public void onSwipedClear() {
                 // todo show dialog or load another data
-                showAlertDialog();
+                showFinishDialog();
             }
         });
 
@@ -127,6 +127,12 @@ public class AlarmQuestActivity extends AppCompatActivity
                 .backgroundColorRes(R.color.black)
                 .titleColorRes(R.color.white)
                 .contentColorRes(R.color.white)
+                .dismissListener(dismiss -> {
+                    // reduce the volume to 30% of initial value
+                    Intent startIntent = new Intent(this, AudioService.class);
+                    startIntent.setAction(AudioService.DECREASE_VOLUME);
+                    startService(startIntent);
+                })
                 .show();
     }
 
@@ -142,7 +148,7 @@ public class AlarmQuestActivity extends AppCompatActivity
         leftToSolveQuestion.setAnimation(scaleAnimation);
     }
 
-    public void showAlertDialog() {
+    public void showFinishDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.alarm_clock_off)
                 .content(R.string.success_message)
@@ -157,15 +163,6 @@ public class AlarmQuestActivity extends AppCompatActivity
                     }
                 })
                 .show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //TODO
-//        Intent startIntent = new Intent(this, AudioService.class);
-//        startIntent.setAction(AudioService.DECREASE_VOLUME);
-//        startService(startIntent);
     }
 
     @Override
@@ -186,7 +183,7 @@ public class AlarmQuestActivity extends AppCompatActivity
 
     @Override
     public void success() {
-        showAlertDialog();
+        showFinishDialog();
         Intent startIntent = new Intent(getApplicationContext(), AudioService.class);
         startIntent.setAction(AudioService.STOP);
         startService(startIntent);

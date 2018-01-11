@@ -21,9 +21,9 @@ public abstract class BaseActivityModule {
 
     static final String ACTIVITY_FRAGMENT_MANAGER = "BaseActivityModule.activityFragmentManager";
 
-    @Binds
-    @PerActivity
-    abstract Context activivtyContext(AppCompatActivity activity);
+//    @Binds
+//    @PerActivity
+//    abstract Context activivtyContext(AppCompatActivity activity);
 
     @Provides
     @Named(ACTIVITY_FRAGMENT_MANAGER)

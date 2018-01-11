@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_alarm_title">Будильник</string>
+    <string name="settings_auto_off">Автовыключение</string>
+    <string name="settings_vibro">Использовать вибрацию</string>
+    <string name="settings_questions_count">Количество вопросов на которые нужно правильно ответить</string>
+    <string name="settings_select_alarm_sound">Выберите мелодию</string>
+</resources>

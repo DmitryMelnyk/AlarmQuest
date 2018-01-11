@@ -1,47 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--<TextView-->
-        <!--android:id="@+id/question"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/choose_question"-->
-        <!--android:textColor="@color/white"-->
-        <!--style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"-->
-        <!--android:minHeight="50dp"-->
-
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"/>-->
-
     <LinearLayout
+        android:id="@+id/ll1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <Button
             style="@style/ButtonQuestion"
             android:id="@+id/answer1"
-            android:text="answer1"/>
+            tools:text="answer1"/>
         <Button
             style="@style/ButtonQuestion"
             android:id="@+id/answer2"
-            android:text="answer2"/>
+            tools:text="answer2"/>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <Button
             style="@style/ButtonQuestion"
             android:id="@+id/answer3"
-            android:text="answer3"/>
+            tools:text="answer3"/>
         <Button
             style="@style/ButtonQuestion"
             android:id="@+id/answer4"
-            android:text="answer4"/>
+            tools:text="answer4"/>
     </LinearLayout>
-
 </LinearLayout>

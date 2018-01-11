@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string-array name="nav_titles">
-        <item>Будильник</item>
-        <item>Инструкция</item>
-        <item>Информация</item>
-        <item>Настройки</item>
-        <item />
-        <item>Выйти</item>
-    </string-array>
-
     <string-array name="day_items">
         <item>Monday</item>
         <item>Tuesday</item>
@@ -31,14 +21,5 @@
         <item>Today</item>
         <item>Tomorrow</item>
     </string-array>
-
-    <array name="nav_titles_icon">
-        <item>@drawable/nav_alarm</item>
-        <item>@drawable/nav_instruction</item>
-        <item>@drawable/nav_about</item>
-        <item>@drawable/nav_settings</item>
-        <item>0</item>
-        <item>@drawable/nav_exit</item>
-    </array>
 
 </resources>

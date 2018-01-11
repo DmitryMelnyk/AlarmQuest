@@ -4,14 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.dmelnyk.alarmquest.R;
 import com.dmelnyk.alarmquest.model.QuestionData;
@@ -40,7 +43,9 @@ public class QuestFragment extends Fragment implements
 
     private SolvedQuestCallbackListener callback;
 
-//    @BindView(R.id.question) TextView question;
+
+    @BindView(R.id.ll1) LinearLayout ll1;
+    @BindView(R.id.ll2) LinearLayout ll2;
     @BindView(R.id.answer1) Button answer1;
     @BindView(R.id.answer2) Button answer2;
     @BindView(R.id.answer3) Button answer3;
@@ -69,7 +74,6 @@ public class QuestFragment extends Fragment implements
                 questPresenter.onButtonClick(4);
                 break;
         }
-
     }
 
     public void setQuestion(QuestionData question) {
@@ -114,12 +118,51 @@ public class QuestFragment extends Fragment implements
 
     @Override
     public void setDataQuestion(@NonNull String question, @NonNull String[] answers) {
-//        this.question.setText(question);
         answer1.setText(answers[0]);
         answer2.setText(answers[1]);
         answer3.setText(answers[2]);
         answer4.setText(answers[3]);
+
+
+        Log.e("!!!", "answerHeight1=" + answer1.getHeight());
+        Log.e("!!!", "answerHeight2=" + answer2.getHeight());
+        Log.e("!!!", "answerHeight3=" + answer3.getHeight());
+        Log.e("!!!", "answerHeight4=" + answer4.getHeight());
+        // finding max height of the buttons
+
+        ll1.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams) ll1.getLayoutParams();
+                LinearLayout.LayoutParams lp2 = (LinearLayout.LayoutParams) ll2.getLayoutParams();
+                if (lp1.height > lp2.height) {
+                    lp2.height = lp1.height;
+                    ll2.setLayoutParams(lp2);
+                } else if (lp1.height < lp2.height) {
+                    lp1.height = lp2.height;
+                    ll1.setLayoutParams(lp1);
+                }
+            }
+        });
+
+        ll2.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams) ll1.getLayoutParams();
+                LinearLayout.LayoutParams lp2 = (LinearLayout.LayoutParams) ll2.getLayoutParams();
+                if (lp1.height > lp2.height) {
+                    lp2.height = lp1.height;
+                    ll2.setLayoutParams(lp2);
+                } else if (lp1.height < lp2.height) {
+                    lp1.height = lp2.height;
+                    ll1.setLayoutParams(lp1);
+                }
+            }
+        });
+
+
     }
+
 
     @Override
     public void enableAllButtons(boolean isEnabled) {
@@ -133,14 +176,8 @@ public class QuestFragment extends Fragment implements
             answer2.setBackgroundResource(R.drawable.button);
             answer3.setBackgroundResource(R.drawable.button);
             answer4.setBackgroundResource(R.drawable.button);
-
-//            answer1.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-//            answer2.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-//            answer3.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-//            answer4.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
         }
     }
-
 
     @Override
     public void finishActivity() {

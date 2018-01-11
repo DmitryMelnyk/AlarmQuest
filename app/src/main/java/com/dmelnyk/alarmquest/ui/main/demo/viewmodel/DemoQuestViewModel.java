@@ -87,6 +87,10 @@ public class DemoQuestViewModel extends ViewModel {
     }
 
     public void onQuestionSwiped() {
-        mAnswers.setValue(mQuestionsData[++mQuestionNumber]);
+        if (mQuestionNumber == mQuestionsData.length-1) {
+            mIsQuestSolved.setValue(false);
+        } else {
+            mAnswers.setValue(mQuestionsData[++mQuestionNumber]);
+        }
     }
 }

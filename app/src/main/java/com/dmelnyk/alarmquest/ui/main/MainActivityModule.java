@@ -11,6 +11,8 @@ import com.dmelnyk.alarmquest.ui.main.demo.view.DemoQuestFragment;
 import com.dmelnyk.alarmquest.ui.main.demo.view.DemoQuestFragmentModule;
 import com.dmelnyk.alarmquest.ui.main.alarm_list.view.AlarmListFragment;
 import com.dmelnyk.alarmquest.ui.main.alarm_list.view.AlarmListFragmentModule;
+import com.dmelnyk.alarmquest.ui.main.settings.view.SettingsFragment;
+import com.dmelnyk.alarmquest.ui.main.settings.view.SettingsFragmentModule;
 
 import dagger.Binds;
 import dagger.Module;
@@ -22,7 +24,7 @@ import dagger.android.ContributesAndroidInjector;
 
 @Module(includes = {
         BaseActivityModule.class,
-         BaseFragmentModule.class
+        BaseFragmentModule.class
 })
 public abstract class MainActivityModule {
 
@@ -33,6 +35,10 @@ public abstract class MainActivityModule {
     @PerFragment
     @ContributesAndroidInjector(modules = DemoQuestFragmentModule.class)
     abstract DemoQuestFragment demoQuestFragment();
+
+    @PerFragment
+    @ContributesAndroidInjector(modules = SettingsFragmentModule.class)
+    abstract SettingsFragment settingsFragment();
 
     @PerActivity
     @Binds

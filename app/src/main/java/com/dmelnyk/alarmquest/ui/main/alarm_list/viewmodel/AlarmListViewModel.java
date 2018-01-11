@@ -119,10 +119,11 @@ public class AlarmListViewModel extends ViewModel {
         if (newAlarm.isEnable()) {
             startNewAlarm(newAlarm);
             // displays time to alarm
-            String nextTime = timeUtil.timeToAlarm(newAlarmTime);
-            mMsgSource.onNext(nextTime);
+            showTimeToAlarmToast(newAlarm);
         }
     }
+
+
 
     public void onAddNewAlarmClicked() {
         Log.d(tag, "onAddNewAlarmClicked");
@@ -154,6 +155,7 @@ public class AlarmListViewModel extends ViewModel {
         repository.updateAlarm(newAlarm);
         if (newAlarm.isEnable()) {
             startNewAlarm(alarm);
+            showTimeToAlarmToast(alarm);
         } else {
             stopAlarm(alarm);
         }
@@ -167,5 +169,10 @@ public class AlarmListViewModel extends ViewModel {
 
     private void stopAlarm(Alarm alarm) {
         AlarmJobCreator.cancelJob(alarm.getId());
+    }
+
+    private void showTimeToAlarmToast(Alarm alarm) {
+        String nextTime = timeUtil.timeToAlarm(alarm.getTime());
+        mMsgSource.onNext(nextTime);
     }
 }
